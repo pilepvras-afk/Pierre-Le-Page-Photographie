@@ -1095,20 +1095,27 @@ body:has(.lightbox.active) .cursor-ring,
       let ringX = 0, ringY = 0;
       let isOverHero = false;
       
-      function checkIfOverHero(e) {
-        const rect = hero.getBoundingClientRect();
-        isOverHero = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
-        cursor.style.display = isOverHero ? 'block' : 'none';
-        cursorRing.style.display = isOverHero ? 'block' : 'none';
-      }
-      
-      document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        cursor.style.left = mouseX + 'px';
-        cursor.style.top = mouseY + 'px';
-        checkIfOverHero(e);
-      });
+     function checkIfOverHero(e) {
+  // Vérifier si on est sur la section hero
+  const heroRect = hero.getBoundingClientRect();
+  const isOverHero = e.clientX >= heroRect.left && e.clientX <= heroRect.right && 
+                     e.clientY >= heroRect.top && e.clientY <= heroRect.bottom;
+  
+  // Vérifier si on est sur la photo panoramique dans la section contact
+  const contactPhoto = document.querySelector('.contact-photo');
+  let isOverContactPhoto = false;
+  
+  if (contactPhoto) {
+    const photoRect = contactPhoto.getBoundingClientRect();
+    isOverContactPhoto = e.clientX >= photoRect.left && e.clientX <= photoRect.right && 
+                         e.clientY >= photoRect.top && e.clientY <= photoRect.bottom;
+  }
+  
+  // Afficher le curseur uniquement sur hero OU sur la photo contact
+  const shouldShowCursor = isOverHero || isOverContactPhoto;
+  cursor.style.display = shouldShowCursor ? 'block' : 'none';
+  cursorRing.style.display = shouldShowCursor ? 'block' : 'none';
+}
       
       function animateRing() {
         if (isOverHero) {
