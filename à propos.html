@@ -1,17 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>À propos - Pierre Le Page</title>
-  
-  <!-- Favicon mode clair -->
-  <link rel="icon" type="image/png" href="Favicon noir.png" media="(prefers-color-scheme: light)" />
-  <!-- Favicon mode sombre -->
-  <link rel="icon" type="image/png" href="Favicon blanc.png" media="(prefers-color-scheme: dark)" />
-  
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Josefin+Sans:wght@100;200;300&family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
-  
   <style>
     * {
       margin: 0;
@@ -22,79 +14,52 @@
     body {
       font-family: 'Josefin Sans', sans-serif;
       background: #ffffff;
+      color: #0a0a0a;
+      line-height: 1.6;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 40px 20px;
     }
     
     .container {
       max-width: 800px;
-      text-align: center;
-    }
-    
-    h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 3rem;
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      color: #0a0a0a;
-      margin-bottom: 30px;
-    }
-    
-    .signature {
-      font-family: 'Dancing Script', cursive;
-      font-size: 2rem;
-      color: #c0a86a;
-      margin: 30px 0 20px;
-    }
-    
-    p {
-      font-family: 'Josefin Sans', sans-serif;
-      font-weight: 200;
-      font-size: 1.1rem;
-      line-height: 1.8;
-      color: #333;
-      margin-bottom: 20px;
+      margin: 0 auto;
+      padding: 60px 24px;
     }
     
     .back-link {
       display: inline-block;
-      margin-top: 40px;
-      padding: 12px 24px;
-      font-family: 'Josefin Sans', sans-serif;
-      font-weight: 200;
-      font-size: 0.9rem;
-      letter-spacing: 0.1em;
+      margin-bottom: 40px;
       color: #c0a86a;
       text-decoration: none;
-      border: 1px solid #c0a86a;
-      border-radius: 30px;
-      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      transition: opacity 0.3s;
     }
     
     .back-link:hover {
-      background: #c0a86a;
-      color: #ffffff;
+      opacity: 0.7;
     }
     
-    @media (max-width: 768px) {
-      h1 { font-size: 2rem; }
-      p { font-size: 0.95rem; }
-      .signature { font-size: 1.5rem; }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 400;
+      margin-bottom: 30px;
+    }
+    
+    p {
+      font-weight: 300;
+      font-size: 1rem;
+      color: #444;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Pierre Le Page</h1>
-    <p>Photographe naturaliste basé en France, je capture la beauté éphémère des paysages et la poésie de la nature.</p>
-    <p>Mon travail est une invitation au voyage, à la contemplation et à la préservation de notre environnement.</p>
-    <p>Chaque image raconte une histoire, celle d'un instant unique où la lumière rencontre la matière.</p>
-    <div class="signature">Pierre Le Page</div>
     <a href="index.html" class="back-link">← Retour à l'accueil</a>
+    <h1>À propos</h1>
+    <p>Photographe naturaliste et romantique, Pierre Le Page capture l'essence des paysages et des émotions à travers son objectif.</p>
+    <p>Basé en France, il explore la beauté silencieuse de la nature et la poésie des instants fugaces.</p>
   </div>
 </body>
 </html>
