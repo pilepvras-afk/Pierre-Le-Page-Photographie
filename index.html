@@ -3,8 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="description" content="Photographie naturaliste et romantique - Portfolio de Pierre Le Page" />
-  <meta name="author" content="Pierre Le Page" />
   <title>Pierre Le Page — Photographie</title>
   
   <!-- Favicons -->
@@ -12,101 +10,126 @@
   <link rel="icon" type="image/png" href="Favicon blanc.png" media="(prefers-color-scheme: dark)" />
   <link rel="icon" type="image/png" href="Favicon blanc.png" />
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Josefin+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Josefin+Sans:wght@100;200;300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
 
   <style>
     /* ========== RESET & VARIABLES ========== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     
     :root {
       --black: #0a0a0a;
       --white: #ffffff;
       --gold: #c0a86a;
-      --gray-bg: #f5f5f5;
-      --text-light: #666;
+      --cream: #f5f0e1;
+      --gray-light: #f8f8f8;
     }
     
-    html {
-      overflow-x: hidden;
+    /* SUPPRIMER scroll-behavior pour éviter les conflits avec JS */
+    html { overflow-x: hidden; }
+    
+    body { 
+      font-family: 'Josefin Sans', sans-serif; 
+      background: var(--white); 
+      color: var(--black); 
+      overflow-x: hidden; 
     }
     
-    body {
-      font-family: 'Josefin Sans', sans-serif;
-      background: var(--white);
-      color: var(--black);
-      overflow-x: hidden;
-      line-height: 1.5;
-    }
-    
-    body.no-scroll {
-      overflow: hidden;
-      height: 100%;
-      position: fixed;
-      width: 100%;
-    }
+    body.no-scroll { overflow: hidden; height: 100%; position: fixed; width: 100%; }
 
-    /* ========== TYPOGRAPHIE ========== */
-    h1, h2, h3 {
-      font-weight: 400;
+    /* ========== ANIMATION REVEAL ========== */
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.7s, transform 0.7s; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ========== EMAIL & FEEDBACK ========== */
+    .contact-email {
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 200;
+      font-size: clamp(0.60rem, 4vw, 1.2rem);
+      letter-spacing: 0.07em;
+      color: var(--black);
+      border-bottom: 1px solid #ccc;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-block;
+      text-decoration: none;
+      margin-bottom: 15px;
     }
+    .contact-email:hover { color: #555; border-color: #888; opacity: 0.7; }
     
-    /* ========== ANIMATIONS ========== */
-    @keyframes breatheZoom {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.08); }
+    .email-feedback {
+      position: absolute;
+      white-space: nowrap;
+      background: #faf7f0;
+      color: #2c2c2c;
+      padding: 8px 18px;
+      font-size: 0.85rem;
+      font-weight: 350;
+      letter-spacing: 0.09em;
+      font-family: 'Josefin Sans', sans-serif;
+      pointer-events: none;
+      z-index: 10000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      border-left: 3px solid #634b1f; 
+      transition: opacity 0.35s ease;
     }
-    
-    @keyframes bounceDown {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(10px); }
+    .email-feedback.fade-out { opacity: 0; }
+
+    /* ========== SIGNATURE ========== */
+    .signature-section {
+      background: var(--white);
+      padding: 40px 20px 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+    .signature-img {
+      height: 110px;
+      width: auto;
+      opacity: 0.95;
+      transition: opacity 0.3s ease;
     }
-    
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
+    .signature-link {
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
     }
+    .signature-link:hover .signature-img { opacity: 0.8; }
 
     /* ========== CURSEUR PERSONNALISÉ ========== */
     .cursor, .cursor-ring { display: none; }
     
-    @media (min-width: 1024px) {
+    @media (min-width: 769px) {
       .cursor {
         position: fixed;
-        width: 6px;
-        height: 6px;
+        width: 8px; height: 8px;
         background: var(--white);
         border-radius: 50%;
         pointer-events: none;
         z-index: 9999;
         transform: translate(-50%, -50%);
-        transition: width 0.2s, height 0.2s;
+        transition: width 0.2s, height 0.2s, background 0.2s;
+        display: block;
       }
-      
       .cursor-ring {
         position: fixed;
-        width: 32px;
-        height: 32px;
-        border: 1.5px solid var(--white);
+        width: 32px; height: 32px;
+        border: 1.75px solid var(--white);
         border-radius: 50%;
         pointer-events: none;
         z-index: 9998;
         transform: translate(-50%, -50%);
-        transition: width 0.2s, height 0.2s, opacity 0.2s;
+        transition: width 0.2s, height 0.2s, opacity 0.2s, border-color 0.2s;
         opacity: 0.7;
+        display: block;
       }
+      body:has(.hero .hero-chevron:hover) .cursor-ring,
+      body:has(.hero .hero-logo:hover) .cursor-ring { width: 20px !important; height: 20px !important; border-color: var(--gold) !important; }
+      body:has(.hero .hero-chevron:hover) .cursor,
+      body:has(.hero .hero-logo:hover) .cursor { width: 6px !important; height: 6px !important; background: var(--gold) !important; }
+      body:has(.gallery-section .photo-card:hover) .cursor-ring,
+      body:has(.gallery-section .photo-card:hover) .cursor { display: none !important; }
     }
 
     /* ========== HERO ========== */
@@ -121,80 +144,80 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      background: #1a1a1a;
       z-index: 1;
     }
-    
-    /* Masquer le curseur classique sur le hero */
-    .hero,
-    .hero * {
-      cursor: none !important;
-    }
+    .hero, .hero *, .hero-content, .hero-logo, .hero-chevron, .hero-name, .hero-sub, .hero-bg, .hero-overlay { cursor: none !important; }
     
     .hero-bg {
       position: absolute;
       inset: 0;
-      background-image: url('red forest.jpg?w=1800&q=85');
+      background-image: url('red forest.jpg?w=1800&q=90');
       background-size: cover;
       background-position: center 30%;
-      filter: brightness(0.55) saturate(0.9);
+      filter: brightness(0.6) saturate(0.85);
       animation: breatheZoom 26s ease-in-out infinite;
-      transform-origin: center center;
     }
     
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.25) 100%);
+      background: radial-gradient(ellipse at center, rgba(30,20,0,0.1) 0%, rgba(0,0,0,0.2) 100%);
     }
     
     .hero-content {
       position: relative;
       z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
-      transform: translateY(80px);
+      user-select: none;
+      transform: translateY(110px);
     }
     
     .hero-name {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.5rem, 12vw, 8rem);
+      font-size: clamp(2rem, 12vw, 9em);
       color: var(--white);
       letter-spacing: 0.05em;
       line-height: 1;
-      text-shadow: 0 2px 30px rgba(0,0,0,0.3);
+      text-shadow: 0 2px 40px rgba(0,0,0,0.25);
     }
     
     .hero-sub {
       font-family: 'Josefin Sans', sans-serif;
       font-weight: 200;
-      font-size: clamp(0.7rem, 2vw, 0.9rem);
-      letter-spacing: 0.5em;
-      color: rgba(255,255,255,0.85);
-      margin-top: 12px;
+      font-size: clamp(0.75rem, 2vw, 0.90rem);
+      letter-spacing: 0.6em;
+      color: rgba(255,255,255,0.88);
+      margin-top: 8px;
       text-transform: uppercase;
     }
     
     .hero-logo {
-      margin-top: 180px;
-      width: 64px;
-      height: 64px;
-      border: 2px solid rgba(255,255,255,0.8);
+      margin-top: 220px;
+      width: min(68px, 10vw);
+      height: min(68px, 10vw);
+      min-width: 36px;
+      min-height: 36px;
+      border: 2.2px solid rgba(255,255,255,0.8);
       border-radius: 50%;
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
       cursor: pointer;
-      transition: opacity 0.3s, transform 0.3s;
+      transition: opacity 0.3s ease, transform 0.3s ease;
     }
-    
-    .hero-logo:hover {
-      opacity: 0.8;
-      transform: scale(1.05);
-    }
-    
+    .hero-logo:hover { opacity: 0.8; transform: scale(1.045); }
     .hero-logo img {
-      width: 42px;
-      height: 42px;
+      width: min(46px, 7vw);
+      height: min(46px, 7vw);
+      min-width: 24px;
+      min-height: 24px;
       object-fit: contain;
+      pointer-events: none;
     }
     
     .hero-chevron {
@@ -202,38 +225,44 @@
       bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
+      z-index: 2;
       cursor: pointer;
-      animation: bounceDown 3s infinite;
+      animation: bounceDown 5s infinite;
+    }
+    .hero-chevron svg { width: 34px; height: 34px; stroke: rgba(255,255,255,0.75); fill: none; stroke-width: 1.5; }
+    
+    @keyframes bounceDown {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
     }
     
-    .hero-chevron svg {
-      width: 32px;
-      height: 32px;
-      stroke: rgba(255,255,255,0.7);
-      fill: none;
-      stroke-width: 1.5;
+    @keyframes breatheZoom {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.08); }
+      60% { transform: scale(1.08); }
+      100% { transform: scale(1); }
     }
 
-    /* ========== GALERIE ========== */
+    /* ========== GALERIE 3:2 - 3 COLONNES ========== */
     .gallery-section {
       position: relative;
       z-index: 2;
       background: var(--white);
-      padding: 60px 0;
+      margin-top: 100vh;
+      padding: 60px 0px 40px;
     }
     
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
+      gap: 6px;
       max-width: 100%;
-      margin: 0 auto;
     }
     
     .photo-card {
       position: relative;
       overflow: hidden;
-      background: #e8e8e8;
+      background: #111;
       cursor: pointer;
       aspect-ratio: 3 / 2;
     }
@@ -243,12 +272,14 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      will-change: transform;
+      transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s;
+      filter: brightness(0.95) saturate(0.95);
+      pointer-events: none;
     }
     
     .photo-card:hover img {
       transform: scale(1.05);
+      filter: brightness(1.02) saturate(1.02);
     }
     
     .photo-card.span-2x2 {
@@ -257,18 +288,17 @@
       aspect-ratio: 3 / 2;
     }
     
-    .photo-card.span-2x2:hover img {
-      transform: scale(1.03);
+    .photo-card.span-2x2 img {
+      object-fit: cover;
     }
     
     .expand-btn {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.8);
-      width: 48px;
-      height: 48px;
-      border: 1.5px solid rgba(255,255,255,0.9);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.75);
+      z-index: 2;
+      width: 46px; height: 46px;
+      border: 1.5px solid rgba(255,255,255,0.8);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -276,15 +306,11 @@
       opacity: 0;
       transition: opacity 0.3s, transform 0.3s;
       pointer-events: none;
-      background: rgba(0,0,0,0.2);
-      backdrop-filter: blur(4px);
     }
     
     .expand-btn svg {
-      width: 18px;
-      height: 18px;
-      stroke: white;
-      fill: none;
+      width: 17px; height: 17px;
+      fill: none; stroke: white;
       stroke-width: 1.8;
     }
     
@@ -296,183 +322,271 @@
     @media (max-width: 768px) {
       .gallery-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 6px;
+        gap: 4x;
+        padding: 0;  
       }
       .photo-card.span-2x2 {
         grid-column: span 2;
         grid-row: span 1;
       }
       .expand-btn {
-        width: 40px;
-        height: 40px;
+        width: 38px;
+        height: 38px;
+      }
+      .expand-btn svg {
+        width: 14px;
+        height: 14px;
+      }
+      .gallery-section {
+        padding-top: 40px;
       }
     }
     
     @media (max-width: 480px) {
       .gallery-grid {
         grid-template-columns: 1fr;
+        gap: 6px;
+        padding: 0;  
       }
       .photo-card.span-2x2 {
         grid-column: span 1;
+        grid-row: span 1;
       }
     }
 
-    /* ========== CONTACT ========== */
-    .contact-section {
-      position: relative;
-      z-index: 2;
-      background: var(--white);
-      padding: 60px 8vw 80px;
-    }
-    
-    .contact-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      margin-bottom: 80px;
-    }
-    
-    .contact-info h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      font-weight: 400;
-      margin-bottom: 24px;
-    }
-    
-    .contact-email {
-      font-family: 'Josefin Sans', sans-serif;
-      font-weight: 300;
-      font-size: 1rem;
-      letter-spacing: 0.08em;
-      color: var(--black);
-      border-bottom: 1px solid rgba(0,0,0,0.15);
-      padding-bottom: 6px;
-      cursor: pointer;
-      transition: opacity 0.3s;
-      display: inline-block;
-      text-decoration: none;
-    }
-    
-    .contact-email:hover {
-      opacity: 0.6;
-    }
-    
-    .contact-message {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      align-items: flex-end;
-    }
-    
-    .contact-box {
-      border: 1px solid rgba(0,0,0,0.12);
-      padding: 36px 40px;
-      max-width: 420px;
-      width: 100%;
-      transition: border-color 0.3s;
-    }
-    
-    .contact-box:hover {
-      border-color: rgba(0,0,0,0.3);
-    }
-    
-    .contact-box p {
-      font-family: 'Josefin Sans', sans-serif;
-      font-weight: 400;
-      font-size: 0.85rem;
-      letter-spacing: 0.2em;
-      line-height: 1.8;
-      color: #555;
-      text-transform: uppercase;
-      text-align: center;
-    }
-    
-    .contact-cta {
-      font-family: 'Josefin Sans', sans-serif;
-      font-weight: 300;
-      font-size: 0.8rem;
-      letter-spacing: 0.15em;
-      color: #999;
-      text-align: right;
-      max-width: 420px;
-    }
-    
-    .contact-photo {
-      width: 100%;
-      aspect-ratio: 16 / 4.5;
-      overflow: hidden;
-      margin-top: 40px;
-      cursor: none !important;
-    }
-    
-    /* Masquer le curseur classique sur la photo contact */
-    .contact-photo,
-    .contact-photo * {
-      cursor: none !important;
-    }
-    
-    .contact-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: saturate(0.7) brightness(0.98);
-      transition: opacity 0.5s;
-    }
-    
-    @media (max-width: 768px) {
-      .contact-section { padding: 40px 6vw 60px; }
-      .contact-grid {
-        grid-template-columns: 1fr;
-        gap: 48px;
-        margin-bottom: 48px;
-      }
-      .contact-info { text-align: center; }
-      .contact-message { align-items: center; }
-      .contact-box { max-width: 100%; padding: 28px 24px; }
-      .contact-cta { text-align: center; }
-      .contact-photo { aspect-ratio: 16/6; margin-top: 20px; }
-    }
+/* ========== CONTACT - ÉPURÉ & ÉLÉGANT ========== */
+.contact-section { 
+  position: relative;
+  z-index: 2;
+  background: var(--white); 
+  padding: 40px 8vw 60px;
+}
 
-    /* ========== SIGNATURE ========== */
-    .signature-section {
-      background: var(--white);
-      padding: 40px 20px 20px;
-      text-align: center;
-      z-index: 2;
-      position: relative;
-    }
-    
-    .signature-img {
-      height: 90px;
-      width: auto;
-      opacity: 0.9;
-      transition: opacity 0.3s;
-    }
-    
-    .signature-link:hover .signature-img {
-      opacity: 0.7;
-    }
+.contact-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+  margin-bottom: 50px;
+}
+
+/* Colonne gauche */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-info h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 5vw, 3.8rem);
+  font-weight: 400;
+  color: var(--black);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-email {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  color: var(--black);
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+  padding-bottom: 4px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-block;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.contact-email:hover {
+  color: #555;
+  border-bottom-color: rgba(0,0,0,0.3);
+  opacity: 0.7;
+}
+
+.contact-phone {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  color: var(--black);
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Colonne droite */
+.contact-message {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-end;
+}
+
+.contact-box {
+  border: 1px solid rgba(0,0,0,0.15);
+  padding: 32px 36px;
+  max-width: 420px;
+  width: 100%;
+  transition: border-color 0.3s ease;
+}
+
+.contact-box:hover {
+  border-color: rgba(0,0,0,0.3);
+}
+
+.contact-box p {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.22em;
+  line-height: 1.9;
+  color: #4a4a4a;
+  text-transform: uppercase;
+  margin: 0;
+  text-align: center;
+}
+
+.contact-cta {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 500;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  color: #8a8a8a;
+  text-align: right;
+  max-width: 420px;
+  width: 100%;
+  transition: color 0.3s ease;
+}
+
+.contact-cta:hover {
+  color: #5a5a5a;
+}
+
+/* Image panoramique */
+.contact-photo {
+  width: 100%;
+  aspect-ratio: 16/4.5;
+  overflow: hidden;
+  cursor: none !important;
+  margin-top : 160px;
+}
+
+.contact-photo:hover {
+  opacity: 1;
+}
+
+.contact-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 50%;
+  filter: saturate(0.6) brightness(0.96);
+  display: block;
+  pointer-events: none;
+  cursor: none !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contact-section {
+    padding: 30px 6vw 40px;
+  }
+  
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+  
+  .contact-info {
+    align-items: center;
+    text-align: center;
+  }
+  
+  .contact-details {
+    align-items: center;
+  }
+  
+  .contact-email {
+    width: auto;
+  }
+  
+  .contact-message {
+    align-items: center;
+  }
+  
+  .contact-box {
+    max-width: 100%;
+    padding: 28px 24px;
+  }
+  
+  .contact-box p {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+  }
+  
+  .contact-cta {
+    text-align: center;
+    font-size: 0.7rem;
+  }
+  
+  .contact-photo {
+    aspect-ratio: 16/5;
+    opacity: 0.8;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-section {
+    padding: 25px 5vw 35px;
+  }
+  
+  .contact-grid {
+    gap: 30px;
+  }
+  
+  .contact-box {
+    padding: 24px 20px;
+  }
+  
+  .contact-box p {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+  }
+}
     /* ========== FOOTER ========== */
-    footer {
-      background: var(--white);
-      padding: 20px 24px 40px;
-      text-align: center;
+    footer { 
       position: relative;
       z-index: 2;
+      background: var(--white); 
+      padding: 10px 24px 32px; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      gap: 6px; 
     }
     
     .footer-copy {
       font-family: 'Josefin Sans', sans-serif;
-      font-weight: 300;
+      font-weight: 400;
       font-size: 0.7rem;
       letter-spacing: 0.15em;
-      color: #aaa;
+      color: #999;
+      text-align: center;
     }
 
     /* ========== LIGHTBOX ========== */
@@ -485,14 +599,14 @@
       justify-content: center;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.3s;
-      background: rgba(0,0,0,0);
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      background: rgba(0, 0, 0, 0);
     }
     
     .lightbox.active {
       opacity: 1;
       visibility: visible;
-      background: rgba(0,0,0,0.96);
+      background: rgba(0, 0, 0, 0.96);
     }
     
     .lb-scroll-container {
@@ -500,7 +614,7 @@
       inset: 0;
       overflow: auto;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
     }
     
@@ -519,38 +633,43 @@
       width: auto;
       height: auto;
       object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      cursor: default;
       transition: transform 0.15s ease-out;
     }
+    
+    #lbImg.zoomed { cursor: grab; }
+    #lbImg.zoomed:active { cursor: grabbing; }
     
     .lb-nav {
       position: fixed;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(30,30,30,0.8);
+      background: rgba(20, 20, 20, 0.7);
       backdrop-filter: blur(12px);
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      width: 56px;
+      height: 56px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       z-index: 1002;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
+      border-radius: 50%;
       opacity: 0;
       visibility: hidden;
-      border: 1px solid rgba(255,255,255,0.2);
+      pointer-events: none;
     }
     
-    .lb-nav.visible {
-      opacity: 1;
-      visibility: visible;
-    }
-    
+    .lb-nav.visible { opacity: 1; visibility: visible; pointer-events: auto; }
     .lb-nav:hover {
-      transform: translateY(-50%) scale(1.1);
-      background: rgba(0,0,0,0.9);
+      transform: translateY(-50%) scale(1.12);
+      background: rgba(0, 0, 0, 0.85);
       border-color: var(--gold);
+      color: var(--gold);
     }
     
     .lb-prev { left: 24px; }
@@ -560,7 +679,7 @@
       position: fixed;
       top: 24px;
       right: 24px;
-      background: rgba(30,30,30,0.8);
+      background: rgba(20, 20, 20, 0.7);
       backdrop-filter: blur(12px);
       width: 48px;
       height: 48px;
@@ -568,17 +687,17 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 28px;
       cursor: pointer;
       z-index: 1002;
-      font-size: 28px;
-      color: white;
-      transition: all 0.2s;
-      border: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.2s ease;
     }
     
     .lb-close:hover {
       transform: scale(1.08);
-      background: rgba(0,0,0,0.9);
+      background: rgba(0, 0, 0, 0.85);
       border-color: var(--gold);
       color: var(--gold);
     }
@@ -588,37 +707,32 @@
       bottom: 24px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(0,0,0,0.6);
+      background: rgba(0, 0, 0, 0.6);
       backdrop-filter: blur(10px);
       padding: 6px 16px;
       border-radius: 30px;
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       letter-spacing: 0.1em;
-      color: rgba(255,255,255,0.8);
+      color: rgba(255, 255, 255, 0.8);
       font-family: 'Josefin Sans', sans-serif;
       z-index: 1002;
+      white-space: nowrap;
     }
     
-    @media (max-width: 768px) {
-      .lb-nav { width: 44px; height: 44px; }
-      .lb-prev { left: 12px; }
-      .lb-next { right: 12px; }
-    }
-    
-    @media (max-width: 460px) {
-      .lb-nav { display: none; }
-    }
-
-    /* ========== BACK TO TOP ========== */
+    /* ========== BOUTON RETOUR HAUT ========== */
     .back-to-top {
       position: fixed;
-      bottom: 24px;
-      right: 24px;
+      bottom: 30px;
+      right: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
       opacity: 0;
       visibility: hidden;
-      transition: all 0.3s;
+      transition: all 0.3s ease;
       z-index: 100;
+      background: transparent;
       padding: 12px 8px;
     }
     
@@ -627,66 +741,109 @@
       visibility: visible;
     }
     
-    .back-to-top svg {
-      width: 28px;
-      height: 44px;
-      stroke: var(--gold);
-      stroke-width: 1.3;
-      fill: none;
-      transition: transform 0.2s;
-    }
-    
-    .back-to-top:hover svg {
+    .back-to-top:hover {
       transform: translateY(-3px);
     }
     
+    .back-to-top svg {
+      width: 28px;
+      height: 47px;
+      stroke: var(--gold);
+      stroke-width: 1.3;
+      fill: none;
+      transition: stroke 0.3s ease, transform 0.2s ease;
+    }
+    
+    .back-to-top:hover svg {
+      transform: translateY(-2px);
+    }
+    
     @media (max-width: 768px) {
-      .back-to-top { bottom: 16px; right: 16px; }
-      .back-to-top svg { width: 24px; height: 38px; }
+      .back-to-top {
+        bottom: 20px;
+        right: 20px;
+      }
+      .back-to-top svg {
+        width: 28px;
+        height: 42px;
+      }
     }
     
-    /* Email feedback */
-    .email-feedback {
-      position: absolute;
-      white-space: nowrap;
-      background: #1a1a1a;
-      color: white;
-      padding: 6px 14px;
-      font-size: 0.75rem;
-      font-family: 'Josefin Sans', sans-serif;
-      pointer-events: none;
-      z-index: 10000;
-      border-radius: 4px;
-      transition: opacity 0.3s;
+    @media (max-width: 768px) {
+      .contact-top { grid-template-columns: 1fr; gap: 32px; }
+      .contact-section { padding: 56px 6vw 0; }
+      .contact-photo { aspect-ratio: 16/7; }
+      .lb-nav { width: 44px; height: 44px; }
+      .lb-prev { left: 12px; }
+      .lb-next { right: 12px; }
     }
     
-    .email-feedback.fade-out {
-      opacity: 0;
+    @media (max-width: 460px) {
+      .lb-nav { display: none; }
     }
+    
+    /* Forcer l'affichage de la signature */
+    .signature-section {
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      position: relative;
+      z-index: 10;
+      min-height: 160px;
+    }
+    
+    .signature-container {
+      display: block !important;
+    }
+    
+    .signature-img {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 0.95 !important;
+    }
+    /* Masquer le curseur personnalisé dans la lightbox */
+.lightbox.active ~ .cursor,
+.lightbox.active ~ .cursor-ring,
+body:has(.lightbox.active) .cursor,
+body:has(.lightbox.active) .cursor-ring,
+.lightbox .cursor,
+.lightbox .cursor-ring,
+.lightbox.active .cursor,
+.lightbox.active .cursor-ring {
+  display: none !important;
+}
+
+/* Optionnel : forcer le curseur par défaut dans la lightbox */
+.lightbox,
+.lightbox * {
+  cursor: default;
+}
+
+.lightbox button,
+.lightbox .lb-nav,
+.lightbox .lb-close {
+  cursor: pointer;
+}
   </style>
 </head>
 <body>
 
-  <!-- HERO -->
   <section class="hero" id="top">
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <h1 class="hero-name">Pierre Le Page</h1>
       <p class="hero-sub">Photographie</p>
-      <div class="hero-logo" id="heroLogo">
-        <img src="Favicon blanc.png" alt="Logo" />
-      </div>
+      <a href="#gallery" class="hero-logo" id="heroLogo"><img src="Favicon blanc.png" alt="Logo Pierre Le Page" /></a>
     </div>
-    <div class="hero-chevron" id="heroChevron">
+    <div class="hero-chevron">
       <svg viewBox="0 0 34 34"><polyline points="7,12 17,22 27,12"/></svg>
     </div>
   </section>
 
-  <!-- GALERIE -->
   <section class="gallery-section" id="gallery">
     <div class="gallery-grid" id="galleryGrid">
-      <div class="photo-card reveal"><img src="59.webp" alt="Photographie 1" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
+      <div class="photo-card reveal"><img src="59.webp" alt="Photographie 1" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
       <div class="photo-card reveal"><img src="27.webp" alt="Photographie 2" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
       <div class="photo-card reveal"><img src="64.webp" alt="Photographie 3" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
       <div class="photo-card span-2x2 reveal"><img src="02.webp" alt="Photographie panoramique 1" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
@@ -700,39 +857,43 @@
       <div class="photo-card reveal"><img src="43.webp" alt="Photographie 10" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
       <div class="photo-card reveal"><img src="05.webp" alt="Photographie 11" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
       <div class="photo-card reveal"><img src="16.webp" alt="Photographie 12" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
-      <div class="photo-card reveal"><img src="08.webp" alt="Photographie 13" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
-    </div>
-  </section>
+<div class="photo-card reveal"><img src="08.webp" alt="Photographie 13" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>  </section>
 
-  <!-- CONTACT -->
-  <section class="contact-section" id="contact">
-    <div class="contact-inner">
-      <div class="contact-grid reveal">
-        <div class="contact-info">
-          <h2>Contact</h2>
+ <section class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="contact-grid reveal">
+      <!-- Colonne gauche -->
+      <div class="contact-info">
+        <h2>Contact</h2>
+        <div class="contact-details">
           <span class="contact-email" id="emailToCopy">contact.pierrelepage@gmail.com</span>
-        </div>
-        <div class="contact-message">
-          <div class="contact-box">
-            <p>Une de mes photos vous inspire ?<br>Vous cherchez à valoriser un lieu, à illustrer un projet ?</p>
-          </div>
-          <p class="contact-cta">Contactez-moi, je vous répondrai dans les meilleurs délais.</p>
+          <span class="contact-phone"></span>
         </div>
       </div>
-      <div class="contact-photo reveal">
-        <img src="DSC_0257 16x4.5.jpg" alt="Paysage panoramique" loading="lazy" />
+      
+      <!-- Colonne droite -->
+      <div class="contact-message">
+        <div class="contact-box">
+          <p>Une de mes photos vous inspire ?<br>Vous cherchez à valoriser un lieu, à illustrer un projet ?</p>
+        </div>
+        <p class="contact-cta">Contactez-moi et je tâcherai de vous répondre dans les meilleurs délais !</p>
       </div>
     </div>
-  </section>
+    
+    <div class="contact-photo reveal">
+      <img src="DSC_0257 16x4.5.jpg" alt="Paysage panoramique" loading="lazy" />
+    </div>
+  </div>
+</section>
 
-  <!-- SIGNATURE -->
   <div class="signature-section">
-    <a href="à propos.html" class="signature-link">
-      <img src="Signature finale.png" alt="Signature" class="signature-img" />
-    </a>
+    <div class="signature-container">
+      <a href="à propos.html" class="signature-link">
+        <img src="Signature finale.png" alt="Signature Pierre Le Page" class="signature-img" />
+      </a>
+    </div>
   </div>
 
-  <!-- FOOTER -->
   <footer>
     <p class="footer-copy">Pierre Le Page ©2026 | Photographie naturaliste et romantique</p>
   </footer>
@@ -746,15 +907,18 @@
     </div>
     <button class="lb-close" id="lbClose">×</button>
     <button class="lb-nav lb-prev" id="lbPrev">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
     </button>
     <button class="lb-nav lb-next" id="lbNext">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
     </button>
     <div class="lb-counter" id="lbCounter"></div>
   </div>
 
-  <!-- BACK TO TOP -->
   <div class="back-to-top" id="backToTop">
     <svg viewBox="0 0 24 48">
       <polyline points="12 4 12 42" />
@@ -764,97 +928,319 @@
   </div>
 
   <script>
-    // ========== INIT ==========
+    // Sécurité
+    document.addEventListener('contextmenu', (e) => { if (e.target.tagName === 'IMG') e.preventDefault(); });
+    document.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key === 's') e.preventDefault(); });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => { 
+        if (e.isIntersecting) { 
+          setTimeout(() => e.target.classList.add('visible'), i * 60); 
+          observer.unobserve(e.target); 
+        } 
+      });
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Lightbox
+    const cards = Array.from(document.querySelectorAll('.photo-card'));
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbCounter = document.getElementById('lbCounter');
+    const lbPrev = document.getElementById('lbPrev');
+    const lbNext = document.getElementById('lbNext');
+    const lbClose = document.getElementById('lbClose');
+    const scrollContainer = document.getElementById('lbScrollContainer');
+
+    let currentIndex = 0;
+    let currentScale = 1;
+    let isZoomed = false;
+    let posX = 0, posY = 0;
+    let lightboxScrollPosition = 0;
+    let activeAnimation = null;
+
+    function updateNavButtonsVisibility(e) {
+      if (!lightbox.classList.contains('active')) return;
+      if (isZoomed) {
+        lbPrev.classList.remove('visible');
+        lbNext.classList.remove('visible');
+        return;
+      }
+      const mouseX = e.clientX;
+      const windowWidth = window.innerWidth;
+      mouseX < 300 ? lbPrev.classList.add('visible') : lbPrev.classList.remove('visible');
+      (windowWidth - mouseX < 300) ? lbNext.classList.add('visible') : lbNext.classList.remove('visible');
+    }
+
+    function disableScroll() { document.body.classList.add('no-scroll'); }
+    function enableScroll() { document.body.classList.remove('no-scroll'); }
+
+    function resetZoom() {
+      currentScale = 1;
+      isZoomed = false;
+      posX = 0; posY = 0;
+      lbImg.classList.remove('zoomed');
+      lbImg.style.transform = 'scale(1)';
+      lbImg.style.cursor = 'default';
+      if (scrollContainer) { scrollContainer.scrollTop = 0; scrollContainer.scrollLeft = 0; }
+    }
+
+    function updateImage() {
+      const img = cards[currentIndex].querySelector('img');
+      let src = img.src;
+      lbImg.src = src;
+      lbImg.alt = img.alt;
+      lbCounter.textContent = `${currentIndex + 1} / ${cards.length}`;
+      resetZoom();
+    }
+
+    function openLightbox(index) {
+      lightboxScrollPosition = window.scrollY;
+      currentIndex = index;
+      updateImage();
+      lightbox.classList.add('active');
+      disableScroll();
+      document.addEventListener('mousemove', updateNavButtonsVisibility);
+    }
+
+    function closeLightbox() {
+      const savedPosition = lightboxScrollPosition;
+      resetZoom();
+      lightbox.classList.remove('active');
+      enableScroll();
+      document.removeEventListener('mousemove', updateNavButtonsVisibility);
+      lbPrev.classList.remove('visible');
+      lbNext.classList.remove('visible');
+      setTimeout(() => { window.scrollTo(0, savedPosition); }, 50);
+    }
+
+    function nextImage() { currentIndex = (currentIndex + 1) % cards.length; updateImage(); }
+    function prevImage() { currentIndex = (currentIndex - 1 + cards.length) % cards.length; updateImage(); }
+
+    cards.forEach((card, i) => { card.addEventListener('click', () => openLightbox(i)); });
+    lbClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox || e.target === scrollContainer) closeLightbox(); });
+    lbPrev.addEventListener('click', (e) => { e.stopPropagation(); if (!isZoomed) prevImage(); });
+    lbNext.addEventListener('click', (e) => { e.stopPropagation(); if (!isZoomed) nextImage(); });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') { closeLightbox(); e.preventDefault(); }
+      if (!isZoomed) {
+        if (e.key === 'ArrowLeft') { prevImage(); e.preventDefault(); }
+        if (e.key === 'ArrowRight') { nextImage(); e.preventDefault(); }
+      }
+    });
+
+    // Zoom molette
+    lightbox.addEventListener('wheel', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      e.preventDefault();
+      const ZOOM_SPEED = 0.08;
+      const MIN_SCALE = 1;
+      const MAX_SCALE = 1.4;
+      const oldScale = currentScale;
+      let newScale = currentScale + (e.deltaY > 0 ? -ZOOM_SPEED : ZOOM_SPEED);
+      newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, newScale));
+      if (Math.abs(newScale - oldScale) < 0.001) return;
+      
+      const rect = lbImg.getBoundingClientRect();
+      let mouseX = (e.clientX - rect.left) / rect.width;
+      let mouseY = (e.clientY - rect.top) / rect.height;
+      mouseX = Math.min(0.9, Math.max(0.1, mouseX));
+      mouseY = Math.min(0.9, Math.max(0.1, mouseY));
+      
+      if (newScale > 1.02) {
+        const scaleFactor = newScale / oldScale;
+        const deltaX = (mouseX - 0.5) * rect.width;
+        const deltaY = (mouseY - 0.5) * rect.height;
+        posX = posX * scaleFactor + deltaX * (1 - scaleFactor);
+        posY = posY * scaleFactor + deltaY * (1 - scaleFactor);
+        const newWidth = rect.width * newScale;
+        const newHeight = rect.height * newScale;
+        const maxX = Math.max(0, (newWidth - window.innerWidth) / 2);
+        const maxY = Math.max(0, (newHeight - window.innerHeight) / 2);
+        posX = Math.min(maxX, Math.max(-maxX, posX));
+        posY = Math.min(maxY, Math.max(-maxY, posY));
+      } else { posX = 0; posY = 0; }
+      
+      currentScale = newScale;
+      isZoomed = currentScale > 1.05;
+      lbImg.classList.toggle('zoomed', isZoomed);
+      lbImg.style.cursor = isZoomed ? 'grab' : 'default';
+      lbImg.style.transform = `scale(${currentScale}) translate(${posX}px, ${posY}px)`;
+    }, { passive: false });
+
+    // Swipe tactile
+    let touchStart = 0;
+    lightbox.addEventListener('touchstart', (e) => { touchStart = e.touches[0].clientX; });
+    lightbox.addEventListener('touchend', (e) => {
+      if (isZoomed) return;
+      const delta = e.changedTouches[0].clientX - touchStart;
+      if (Math.abs(delta) > 50) { delta < 0 ? nextImage() : prevImage(); }
+    });
+
+    // Curseur personnalisé
     (function() {
-      // Éléments
       const hero = document.querySelector('.hero');
-      const gallery = document.getElementById('gallery');
-      const chevron = document.getElementById('heroChevron');
-      const logo = document.getElementById('heroLogo');
-      const backBtn = document.getElementById('backToTop');
-      const emailEl = document.getElementById('emailToCopy');
+      const cursor = document.createElement('div');
+      cursor.className = 'cursor';
+      const cursorRing = document.createElement('div');
+      cursorRing.className = 'cursor-ring';
+      document.body.appendChild(cursor);
+      document.body.appendChild(cursorRing);
       
-      // ========== SCROLL REVEAL ==========
-      const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1 });
-      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+      let mouseX = 0, mouseY = 0;
+      let ringX = 0, ringY = 0;
+      let isOverHero = false;
       
-      // ========== LIGHTBOX ==========
-      const cards = Array.from(document.querySelectorAll('.photo-card'));
-      const lightbox = document.getElementById('lightbox');
-      const lbImg = document.getElementById('lbImg');
-      const lbCounter = document.getElementById('lbCounter');
-      const lbPrev = document.getElementById('lbPrev');
-      const lbNext = document.getElementById('lbNext');
-      const lbClose = document.getElementById('lbClose');
-      const scrollContainer = document.getElementById('lbScrollContainer');
-      
-      let currentIndex = 0;
-      let currentScale = 1;
-      let isZoomed = false;
-      let posX = 0, posY = 0;
-      let savedScroll = 0;
-      
-      function resetZoom() {
-        currentScale = 1;
-        isZoomed = false;
-        posX = posY = 0;
-        lbImg.style.transform = 'scale(1)';
-        if (scrollContainer) { scrollContainer.scrollTop = 0; scrollContainer.scrollLeft = 0; }
+      function checkIfOverHero(e) {
+        const rect = hero.getBoundingClientRect();
+        isOverHero = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
+        cursor.style.display = isOverHero ? 'block' : 'none';
+        cursorRing.style.display = isOverHero ? 'block' : 'none';
       }
       
-      function updateImage() {
-        const img = cards[currentIndex].querySelector('img');
-        lbImg.src = img.src;
-        lbCounter.textContent = `${currentIndex + 1} / ${cards.length}`;
-        resetZoom();
-      }
-      
-      function openLightbox(index) {
-        savedScroll = window.scrollY;
-        currentIndex = index;
-        updateImage();
-        lightbox.classList.add('active');
-        document.body.classList.add('no-scroll');
-      }
-      
-      function closeLightbox() {
-        resetZoom();
-        lightbox.classList.remove('active');
-        document.body.classList.remove('no-scroll');
-        setTimeout(() => window.scrollTo(0, savedScroll), 50);
-      }
-      
-      function nextImage() { currentIndex = (currentIndex + 1) % cards.length; updateImage(); }
-      function prevImage() { currentIndex = (currentIndex - 1 + cards.length) % cards.length; updateImage(); }
-      
-      cards.forEach((card, i) => card.addEventListener('click', () => openLightbox(i)));
-      lbClose.addEventListener('click', closeLightbox);
-      lightbox.addEventListener('click', (e) => { if (e.target === lightbox || e.target === scrollContainer) closeLightbox(); });
-      lbPrev.addEventListener('click', (e) => { e.stopPropagation(); if (!isZoomed) prevImage(); });
-      lbNext.addEventListener('click', (e) => { e.stopPropagation(); if (!isZoomed) nextImage(); });
-      
-      document.addEventListener('keydown', (e) => {
-        if (!lightbox.classList.contains('active')) return;
-        if (e.key === 'Escape') { closeLightbox(); e.preventDefault(); }
-        if (!isZoomed && e.key === 'ArrowLeft') { prevImage(); e.preventDefault(); }
-        if (!isZoomed && e.key === 'ArrowRight') { nextImage(); e.preventDefault(); }
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursor.style.left = mouseX + 'px';
+        cursor.style.top = mouseY + 'px';
+        checkIfOverHero(e);
       });
       
-      // Zoom molette
-      lightbox.addEventListener('wheel', (e) => {
-        if (!lightbox.classList.contains('active')) return;
+      function animateRing() {
+        if (isOverHero) {
+          ringX += (mouseX - ringX) * 0.35;
+          ringY += (mouseY - ringY) * 0.35;
+          cursorRing.style.left = ringX + 'px';
+          cursorRing.style.top = ringY + 'px';
+        }
+        requestAnimationFrame(animateRing);
+      }
+      animateRing();
+    })();
+
+    // Copie email
+    const emailElement = document.getElementById('emailToCopy');
+    if (emailElement) {
+      emailElement.addEventListener('click', (e) => {
         e.preventDefault();
-        const delta = e.deltaY > 0 ? -0.08 : 0.08;
-        let newScale = Math.min(1.4, Math.max(1, currentScale + delta));
-        if (Math.abs(newScale - currentScale) < 0.01) return;
+        const email = 'pilep.vras@gmail.com';
+        navigator.clipboard.writeText(email);
         
-        const rect = lbImg.getBoundingClientRect();
-        let mx = (e.clientX - rect.left) / rect.width;
-        let my
+        const feedback = document.createElement('div');
+        feedback.className = 'email-feedback';
+        feedback.textContent = '✓ Copiée';
+        
+        const rect = emailElement.getBoundingClientRect();
+        feedback.style.left = (rect.right + window.scrollX + 20) + 'px';
+        feedback.style.top = (rect.top + window.scrollY + rect.height / 2) + 'px';
+        feedback.style.transform = 'translateY(-50%)';
+        
+        document.body.appendChild(feedback);
+        setTimeout(() => {
+          feedback.classList.add('fade-out');
+          setTimeout(() => feedback.remove(), 1000);
+        }, 2000);
+      });
+    }
+
+    // Fonction de défilement fluide optimisée
+    function smoothScrollTo(targetElement, duration = 800) {
+      if (activeAnimation) {
+        cancelAnimationFrame(activeAnimation);
+      }
+      
+      const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+      const startPosition = window.scrollY;
+      const distance = targetPosition - startPosition;
+      let startTime = null;
+      
+      function easeInOutCubic(t) {
+        return t < 0.5 
+          ? 4 * t * t * t 
+          : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+      
+      function animation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        const ease = easeInOutCubic(progress);
+        
+        window.scrollTo(0, startPosition + (distance * ease));
+        
+        if (timeElapsed < duration) {
+          activeAnimation = requestAnimationFrame(animation);
+        } else {
+          activeAnimation = null;
+        }
+      }
+      
+      activeAnimation = requestAnimationFrame(animation);
+    }
+
+    // Défilement vers la galerie
+    const chevron = document.querySelector('.hero-chevron');
+    const logo = document.getElementById('heroLogo');
+    const galleryTarget = document.getElementById('gallery');
+    
+    function scrollToGallery(e) {
+      e.preventDefault();
+      if (galleryTarget) {
+        smoothScrollTo(galleryTarget, 800);
+      }
+    }
+    
+    if (chevron) chevron.addEventListener('click', scrollToGallery);
+    if (logo) logo.addEventListener('click', scrollToGallery);
+
+    // Bouton retour en haut
+    const backToTopBtn = document.getElementById('backToTop');
+    
+    function checkBackToTopVisibility() {
+      if (!galleryTarget || !backToTopBtn) return;
+      const triggerPoint = galleryTarget.offsetTop + (galleryTarget.offsetHeight * 0.6);
+      backToTopBtn.classList.toggle('visible', window.scrollY > triggerPoint);
+    }
+    
+   function scrollToTopHandler(e) {
+  e.preventDefault();
+  const startPosition = window.scrollY;
+  const duration = 2000;
+  let startTime = null;
+  
+  function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+  
+  function animation(currentTime) {
+    if (startTime === null) startTime = currentTime;
+    const timeElapsed = currentTime - startTime;
+    const progress = Math.min(timeElapsed / duration, 1);
+    const ease = easeOutCubic(progress);
+    
+    window.scrollTo(0, startPosition * (1 - ease));
+    
+    if (timeElapsed < duration) {
+      requestAnimationFrame(animation);
+    }
+  }
+  
+  requestAnimationFrame(animation);
+}
+// Connecter le bouton retour en haut
+if (backToTopBtn) {
+  backToTopBtn.addEventListener('click', scrollToTopHandler);
+}
+
+window.addEventListener('scroll', checkBackToTopVisibility);
+window.addEventListener('load', () => {
+  window.scrollTo(0, 0);
+  checkBackToTopVisibility();
+});
+  </script>
+</body>
+</html>
