@@ -1226,16 +1226,18 @@ function handleScrollToGallery(e) {
 if (heroChevron) heroChevron.addEventListener('click', handleScrollToGallery);
 if (heroLogoLink) heroLogoLink.addEventListener('click', handleScrollToGallery);
 
-    // Bouton retour en haut
-    const backToTopBtn = document.getElementById('backToTop');
-    
+// Bouton retour en haut
+const backToTopBtn = document.getElementById('backToTop');
+const gallerySectionForButton = document.getElementById('gallery');
+
 function checkBackToTopVisibility() {
-  if (!gallerySection || !backToTopBtn) return;
-  const triggerPoint = gallerySection.offsetTop + (gallerySection.offsetHeight * 0.6);
-  backToTopBtn.classList.toggle('visible', window.scrollY > triggerPoint);
+  if (!gallerySectionForButton || !backToTopBtn) return;
+  const triggerPoint = gallerySectionForButton.offsetTop + (gallerySectionForButton.offsetHeight * 0.6);
+  const shouldShow = window.scrollY > triggerPoint;
+  backToTopBtn.classList.toggle('visible', shouldShow);
 }
-    
-   function scrollToTopHandler(e) {
+
+function scrollToTopHandler(e) {
   e.preventDefault();
   const startPosition = window.scrollY;
   const duration = 2000;
@@ -1260,6 +1262,7 @@ function checkBackToTopVisibility() {
   
   requestAnimationFrame(animation);
 }
+
 // Connecter le bouton retour en haut
 if (backToTopBtn) {
   backToTopBtn.addEventListener('click', scrollToTopHandler);
@@ -1268,7 +1271,7 @@ if (backToTopBtn) {
 window.addEventListener('scroll', checkBackToTopVisibility);
 window.addEventListener('load', () => {
   window.scrollTo(0, 0);
-  checkBackToTopVisibility();
+  setTimeout(checkBackToTopVisibility, 100); // Petit délai pour garantir que tout est chargé
 });
   // ========== FADE-IN FLUIDE POUR LES IMAGES DE LA GALERIE ==========
 (function() {
