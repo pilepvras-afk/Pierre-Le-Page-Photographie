@@ -661,6 +661,14 @@
     .email-feedback.fade-out {
       opacity: 0;
     }
+    /* Masquer le curseur classique sur le hero et la photo contact */
+.hero,
+.hero *,
+.contact-photo,
+.contact-photo * {
+  cursor: none !important;
+}
+    
   </style>
 </head>
 <body>
@@ -960,56 +968,53 @@
         });
       }
       
-      // ========== CURSEUR PERSONNALISÉ (uniquement sur hero) ==========
-      if (window.innerWidth >= 1024) {
-        document.body.classList.add('has-custom-cursor');
-        const cursor = document.createElement('div');
-        cursor.className = 'cursor';
-        const ring = document.createElement('div');
-        ring.className = 'cursor-ring';
-        document.body.appendChild(cursor);
-        document.body.appendChild(ring);
-        
-        let mouseX = 0, mouseY = 0;
-        let ringX = 0, ringY = 0;
-        let onHero = false;
-        
-        function checkArea(e) {
-          const heroRect = hero?.getBoundingClientRect();
-          onHero = heroRect && e.clientX >= heroRect.left && e.clientX <= heroRect.right && 
+   // Curseur personnalisé (uniquement sur hero et photo contact)
+if (window.innerWidth >= 1024) {
+  document.body.classList.add('has-custom-cursor');
+  const cursor = document.createElement('div');
+  cursor.className = 'cursor';
+  const ring = document.createElement('div');
+  ring.className = 'cursor-ring';
+  document.body.appendChild(cursor);
+  document.body.appendChild(ring);
+  
+  let mouseX = 0, mouseY = 0;
+  let ringX = 0, ringY = 0;
+  let showCursor = false;
+  
+  function checkArea(e) {
+    const heroRect = document.querySelector('.hero')?.getBoundingClientRect();
+    const photoRect = document.querySelector('.contact-photo')?.getBoundingClientRect();
+    
+    const onHero = heroRect && e.clientX >= heroRect.left && e.clientX <= heroRect.right && 
                    e.clientY >= heroRect.top && e.clientY <= heroRect.bottom;
-          const show = onHero;
-          cursor.style.display = show ? 'block' : 'none';
-          ring.style.display = show ? 'block' : 'none';
-        }
-        
-        document.addEventListener('mousemove', (e) => {
-          mouseX = e.clientX;
-          mouseY = e.clientY;
-          cursor.style.left = mouseX + 'px';
-          cursor.style.top = mouseY + 'px';
-          checkArea(e);
-        });
-        
-        function animateRing() {
-          if (onHero) {
-            ringX += (mouseX - ringX) * 0.3;
-            ringY += (mouseY - ringY) * 0.3;
-            ring.style.left = ringX + 'px';
-            ring.style.top = ringY + 'px';
-          }
-          requestAnimationFrame(animateRing);
-        }
-        animateRing();
-      }
-      
-      // Initialisation
-      window.scrollTo(0, 0);
-      checkBackToTop();
-      
-      // Protection images
-      document.addEventListener('contextmenu', (e) => { if (e.target.tagName === 'IMG') e.preventDefault(); });
-    })();
+    const onPhoto = photoRect && e.clientX >= photoRect.left && e.clientX <= photoRect.right && 
+                    e.clientY >= photoRect.top && e.clientY <= photoRect.bottom;
+    
+    showCursor = onHero || onPhoto;
+    cursor.style.display = showCursor ? 'block' : 'none';
+    ring.style.display = showCursor ? 'block' : 'none';
+  }
+  
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+    checkArea(e);
+  });
+  
+  function animateRing() {
+    if (showCursor) {
+      ringX += (mouseX - ringX) * 0.3;
+      ringY += (mouseY - ringY) * 0.3;
+      ring.style.left = ringX + 'px';
+      ring.style.top = ringY + 'px';
+    }
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+}
   </script>
 </body>
 </html>
