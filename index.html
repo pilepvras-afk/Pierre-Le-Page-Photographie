@@ -842,6 +842,35 @@ body:has(.lightbox.active) .cursor-ring,
 @keyframes shimmer {
   to { background-position-x: -200%; }
 }
+/* ========== FADE-IN FLUIDE POUR LES IMAGES DE LA GALERIE ========== */
+.photo-card img {
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.photo-card img.loaded {
+  opacity: 1;
+}
+
+/* Supprimer le shimmer effect qui peut être trop agressif */
+.photo-card {
+  background: #f0f0f0;
+  animation: none;
+}
+
+/* Option : garder un léger placeholder gris */
+.photo-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #e8e8e8;
+  z-index: 0;
+}
+
+.photo-card img {
+  position: relative;
+  z-index: 1;
+}
   </style>
 </head>
 <body>
@@ -1297,6 +1326,46 @@ window.addEventListener('load', () => {
   window.scrollTo(0, 0);
   checkBackToTopVisibility();
 });
+  // ========== FADE-IN FLUIDE POUR LES IMAGES DE LA GALERIE ==========
+(function() {
+  // Sélectionner toutes les images de la galerie
+  const galleryImages = document.querySelectorAll('.photo-card img');
+  
+  // Fonction pour marquer une image comme chargée
+  function markAsLoaded(img) {
+    img.classList.add('loaded');
+  }
+  
+  // Vérifier si une image est déjà chargée
+  galleryImages.forEach(img => {
+    if (img.complete) {
+      // Image déjà chargée
+      markAsLoaded(img);
+    } else {
+      // Attendre le chargement
+      img.addEventListener('load', () => markAsLoaded(img));
+      // Gérer les erreurs (afficher quand même)
+      img.addEventListener('error', () => markAsLoaded(img));
+    }
+  });
+  
+  // Observer pour les images chargées dynamiquement (si besoin)
+  const imageObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (node.nodeType === 1 && node.tagName === 'IMG') {
+          if (node.complete) {
+            markAsLoaded(node);
+          } else {
+            node.addEventListener('load', () => markAsLoaded(node));
+          }
+        }
+      });
+    });
+  });
+  
+  imageObserver.observe(document.getElementById('galleryGrid'), { childList: true, subtree: true });
+})();
   </script>
 </body>
 </html>
