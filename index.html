@@ -1233,14 +1233,8 @@ function smoothScrollTo(targetElement, duration = 850) {
   
   isScrollingActive = true;
   
-  // Mettre en pause l'animation du héros pendant le défilement
-  const heroBg = document.querySelector('.hero-bg');
-  const originalAnimation = heroBg ? heroBg.style.animation : null;
-  if (heroBg) heroBg.style.animation = 'none';
-  
   const startTime = performance.now();
   
-  // Easing plus naturel (bezier simplifié)
   const easeFunction = (t) => {
     return t < 0.5 
       ? 4 * t * t * t 
@@ -1260,11 +1254,6 @@ function smoothScrollTo(targetElement, duration = 850) {
       window.scrollTo(0, targetY);
       isScrollingActive = false;
       activeScrollAnimation = null;
-      
-      // Restaurer l'animation du héros
-      if (heroBg) {
-        heroBg.style.animation = 'breatheZoom 26s ease-in-out infinite';
-      }
     }
   }
   
