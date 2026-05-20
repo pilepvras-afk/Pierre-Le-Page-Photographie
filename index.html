@@ -1229,11 +1229,11 @@ if (heroLogoLink) heroLogoLink.addEventListener('click', handleScrollToGallery);
     // Bouton retour en haut
     const backToTopBtn = document.getElementById('backToTop');
     
-    function checkBackToTopVisibility() {
-      if (!galleryTarget || !backToTopBtn) return;
-      const triggerPoint = galleryTarget.offsetTop + (galleryTarget.offsetHeight * 0.6);
-      backToTopBtn.classList.toggle('visible', window.scrollY > triggerPoint);
-    }
+function checkBackToTopVisibility() {
+  if (!gallerySection || !backToTopBtn) return;
+  const triggerPoint = gallerySection.offsetTop + (gallerySection.offsetHeight * 0.6);
+  backToTopBtn.classList.toggle('visible', window.scrollY > triggerPoint);
+}
     
    function scrollToTopHandler(e) {
   e.preventDefault();
