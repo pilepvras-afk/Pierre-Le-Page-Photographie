@@ -107,9 +107,7 @@
       overflow: hidden;
       background: #faf9f5;
       box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-      /* Largeur réduite de moitié par rapport au conteneur parent */
       width: 50%;
-      /* Centrage automatique pour un rendu équilibré */
       margin-left: auto;
       margin-right: auto;
     }
@@ -127,11 +125,11 @@
       display: block;
       object-fit: cover;
       aspect-ratio: 16 / 6;
-      transition: none; /* Aucune animation au survol */
-      filter: brightness(0.88); /* Léger assombrissement global */
+      transition: none;
+      filter: brightness(0.88);
     }
     
-    /* Optionnel : léger dégradé de fondu en bas pour fondre avec l'arrière-plan (renforce l'assombrissement doux) */
+    /* Léger dégradé de fondu en bas */
     .panorama-image::after {
       content: '';
       position: absolute;
@@ -144,7 +142,7 @@
       border-radius: 0 0 12px 12px;
     }
     
-    /* Suppression complète de la légende / sous-titre */
+    /* Suppression complète de la légende */
     .panorama-caption {
       display: none;
     }
@@ -173,13 +171,11 @@
         aspect-ratio: 16 / 5;
       }
       
-      /* Sur mobile, la taille réduite passe à 70% pour rester lisible */
       .panorama-section {
         width: 70%;
       }
     }
     
-    /* Pour les très petits écrans, conserver une bonne visibilité */
     @media (max-width: 480px) {
       .panorama-section {
         width: 85%;
@@ -209,36 +205,31 @@
     
     <div class="portrait-section">
       <div class="portrait-image">
-        <!-- Portrait style biographie : élégant, naturaliste, lumière douce -->
-        <img src="https://picsum.photos/id/64/400/400" 
-             alt="Portrait de Pierre Le Page, photographe naturaliste"
-             src="portrait1.jpg"
-             sizes="(max-width: 560px) 160px, 180px">
+        <!-- Portrait - Correction : un seul attribut src -->
+        <img src="portrait1.jpg" 
+             alt="Portrait de Pierre Le Page, photographe naturaliste">
       </div>
       <div class="bio-text">
         <p>Photographe naturaliste et romantique, Pierre Le Page capture l'essence des paysages et des émotions à travers son objectif. Basé en France, il explore la beauté silencieuse de la nature et la poésie des instants fugaces.</p>
-        <p>Son regard se pose aussi bien sur les brumes matinales des vallées que sur les détails infimes — une goutte d’eau, une plume oubliée, la lumière rasante d’un couchant. Chaque image devient une conversation intime avec le monde vivant, entre rigueur documentaire et rêverie picturale.</p>
+        <p>Son regard se pose aussi bien sur les brumes matinales des vallées que sur les détails infimes — une goutte d'eau, une plume oubliée, la lumière rasante d'un couchant. Chaque image devient une conversation intime avec le monde vivant, entre rigueur documentaire et rêverie picturale.</p>
       </div>
     </div>
     
     <hr />
     
-    <p>Autodidacte devenu amoureux des grands espaces, Pierre arpente depuis plus de quinze ans les côtes bretonnes, les forêts d’Ardèche et les Alpes silencieuses. Il privilégie les prises de vue en argentique et les tirages limités, dans le souci constant d’un rendu sensible et authentique. Ses travaux ont été exposés à Rennes, Lyon et Bruxelles, et plusieurs de ses séries sont conservées dans des collections privées dédiées à la photographie de nature.</p>
+    <p>Autodidacte devenu amoureux des grands espaces, Pierre arpente depuis plus de quinze ans les côtes bretonnes, les forêts d'Ardèche et les Alpes silencieuses. Il privilégie les prises de vue en argentique et les tirages limités, dans le souci constant d'un rendu sensible et authentique. Ses travaux ont été exposés à Rennes, Lyon et Bruxelles, et plusieurs de ses séries sont conservées dans des collections privées dédiées à la photographie de nature.</p>
     
     <div class="signature-note">
       « La photographie est une manière de retenir le souffle du monde. » <br />— Pierre Le Page
     </div>
     
-    <!-- Panorama : taille réduite de moitié, sous-titre supprimé, assombrissement conservé -->
+    <!-- Panorama - Correction : un seul attribut src -->
     <div class="panorama-section">
       <div class="panorama-image">
-        <img src="https://picsum.photos/id/104/1600/600" 
+        <img src="DSCN7129.jpg" 
              alt="Vaste paysage naturel - Brume matinale et vallée silencieuse"
-             src="DSCN7129.jpg"
-             sizes="(max-width: 1000px) 100vw, 1000px"
              loading="lazy">
       </div>
-      <!-- Ancienne légende complètement retirée -->
     </div>
     
     <div class="small-credit">
