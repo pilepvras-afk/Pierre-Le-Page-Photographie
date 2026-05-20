@@ -35,7 +35,6 @@
     
     html {
       overflow-x: hidden;
-      scroll-behavior: smooth;
     }
     
     body {
@@ -69,10 +68,6 @@
       50% { transform: translateX(-50%) translateY(10px); }
     }
     
-    @keyframes shimmer {
-      to { background-position-x: -200%; }
-    }
-    
     .reveal {
       opacity: 0;
       transform: translateY(20px);
@@ -85,14 +80,9 @@
     }
 
     /* ========== CURSEUR PERSONNALISÉ ========== */
+    .cursor, .cursor-ring { display: none; }
+    
     @media (min-width: 1024px) {
-      .cursor, .cursor-ring { display: none; }
-      
-      body.has-custom-cursor .cursor,
-      body.has-custom-cursor .cursor-ring {
-        display: block;
-      }
-      
       .cursor {
         position: fixed;
         width: 6px;
@@ -132,6 +122,12 @@
       justify-content: center;
       overflow: hidden;
       z-index: 1;
+    }
+    
+    /* Masquer le curseur classique sur le hero */
+    .hero,
+    .hero * {
+      cursor: none !important;
     }
     
     .hero-bg {
@@ -223,7 +219,6 @@
       position: relative;
       z-index: 2;
       background: var(--white);
-      margin-top: 100vh;
       padding: 60px 0;
     }
     
@@ -412,6 +407,13 @@
       aspect-ratio: 16 / 4.5;
       overflow: hidden;
       margin-top: 40px;
+      cursor: none !important;
+    }
+    
+    /* Masquer le curseur classique sur la photo contact */
+    .contact-photo,
+    .contact-photo * {
+      cursor: none !important;
     }
     
     .contact-photo img {
@@ -661,14 +663,6 @@
     .email-feedback.fade-out {
       opacity: 0;
     }
-    /* Masquer le curseur classique sur le hero et la photo contact */
-.hero,
-.hero *,
-.contact-photo,
-.contact-photo * {
-  cursor: none !important;
-}
-    
   </style>
 </head>
 <body>
@@ -806,7 +800,6 @@
       let isZoomed = false;
       let posX = 0, posY = 0;
       let savedScroll = 0;
-      let animFrame = null;
       
       function resetZoom() {
         currentScale = 1;
@@ -864,157 +857,4 @@
         
         const rect = lbImg.getBoundingClientRect();
         let mx = (e.clientX - rect.left) / rect.width;
-        let my = (e.clientY - rect.top) / rect.height;
-        mx = Math.min(0.9, Math.max(0.1, mx));
-        my = Math.min(0.9, Math.max(0.1, my));
-        
-        if (newScale > 1.02) {
-          const factor = newScale / currentScale;
-          posX = posX * factor + (mx - 0.5) * rect.width * (1 - factor);
-          posY = posY * factor + (my - 0.5) * rect.height * (1 - factor);
-          const maxX = Math.max(0, (rect.width * newScale - window.innerWidth) / 2);
-          const maxY = Math.max(0, (rect.height * newScale - window.innerHeight) / 2);
-          posX = Math.min(maxX, Math.max(-maxX, posX));
-          posY = Math.min(maxY, Math.max(-maxY, posY));
-        } else { posX = posY = 0; }
-        
-        currentScale = newScale;
-        isZoomed = currentScale > 1.05;
-        lbImg.style.transform = `scale(${currentScale}) translate(${posX}px, ${posY}px)`;
-      }, { passive: false });
-      
-      // ========== SMOOTH SCROLL ==========
-      let isScrolling = false;
-      let scrollAnim = null;
-      
-      function smoothScrollTo(target, duration = 800) {
-        if (isScrolling || !target) return;
-        const startY = window.scrollY;
-        const targetY = target.getBoundingClientRect().top + startY;
-        const distance = targetY - startY;
-        if (Math.abs(distance) < 2) return;
-        isScrolling = true;
-        const startTime = performance.now();
-        
-        const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        
-        function animate(now) {
-          const elapsed = now - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          window.scrollTo(0, startY + distance * ease(progress));
-          if (elapsed < duration) {
-            scrollAnim = requestAnimationFrame(animate);
-          } else {
-            window.scrollTo(0, targetY);
-            isScrolling = false;
-            scrollAnim = null;
-          }
-        }
-        if (scrollAnim) cancelAnimationFrame(scrollAnim);
-        scrollAnim = requestAnimationFrame(animate);
-      }
-      
-      function scrollToGallery(e) {
-        e.preventDefault();
-        if (gallery && !isScrolling) smoothScrollTo(gallery, 800);
-      }
-      
-      chevron?.addEventListener('click', scrollToGallery);
-      logo?.addEventListener('click', scrollToGallery);
-      
-      // ========== BACK TO TOP ==========
-      function checkBackToTop() {
-        if (!gallery || !backBtn) return;
-        const trigger = gallery.offsetTop + gallery.offsetHeight * 0.6;
-        backBtn.classList.toggle('visible', window.scrollY > trigger);
-      }
-      
-      function scrollToTop(e) {
-        e.preventDefault();
-        const start = window.scrollY;
-        const duration = 1500;
-        const startTime = performance.now();
-        const ease = t => 1 - Math.pow(1 - t, 3);
-        
-        function animate(now) {
-          const elapsed = now - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          window.scrollTo(0, start * (1 - ease(progress)));
-          if (elapsed < duration) requestAnimationFrame(animate);
-        }
-        requestAnimationFrame(animate);
-      }
-      
-      backBtn?.addEventListener('click', scrollToTop);
-      window.addEventListener('scroll', checkBackToTop);
-      
-      // ========== EMAIL COPY ==========
-      if (emailEl) {
-        emailEl.addEventListener('click', (e) => {
-          e.preventDefault();
-          navigator.clipboard.writeText('contact.pierrelepage@gmail.com');
-          const msg = document.createElement('div');
-          msg.className = 'email-feedback';
-          msg.textContent = '✓ Email copié';
-          const rect = emailEl.getBoundingClientRect();
-          msg.style.left = (rect.right + 15) + 'px';
-          msg.style.top = (rect.top + rect.height / 2) + 'px';
-          msg.style.transform = 'translateY(-50%)';
-          document.body.appendChild(msg);
-          setTimeout(() => {
-            msg.classList.add('fade-out');
-            setTimeout(() => msg.remove(), 500);
-          }, 1500);
-        });
-      }
-      
-   // Curseur personnalisé (uniquement sur hero et photo contact)
-if (window.innerWidth >= 1024) {
-  document.body.classList.add('has-custom-cursor');
-  const cursor = document.createElement('div');
-  cursor.className = 'cursor';
-  const ring = document.createElement('div');
-  ring.className = 'cursor-ring';
-  document.body.appendChild(cursor);
-  document.body.appendChild(ring);
-  
-  let mouseX = 0, mouseY = 0;
-  let ringX = 0, ringY = 0;
-  let showCursor = false;
-  
-  function checkArea(e) {
-    const heroRect = document.querySelector('.hero')?.getBoundingClientRect();
-    const photoRect = document.querySelector('.contact-photo')?.getBoundingClientRect();
-    
-    const onHero = heroRect && e.clientX >= heroRect.left && e.clientX <= heroRect.right && 
-                   e.clientY >= heroRect.top && e.clientY <= heroRect.bottom;
-    const onPhoto = photoRect && e.clientX >= photoRect.left && e.clientX <= photoRect.right && 
-                    e.clientY >= photoRect.top && e.clientY <= photoRect.bottom;
-    
-    showCursor = onHero || onPhoto;
-    cursor.style.display = showCursor ? 'block' : 'none';
-    ring.style.display = showCursor ? 'block' : 'none';
-  }
-  
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    cursor.style.left = mouseX + 'px';
-    cursor.style.top = mouseY + 'px';
-    checkArea(e);
-  });
-  
-  function animateRing() {
-    if (showCursor) {
-      ringX += (mouseX - ringX) * 0.3;
-      ringY += (mouseY - ringY) * 0.3;
-      ring.style.left = ringX + 'px';
-      ring.style.top = ringY + 'px';
-    }
-    requestAnimationFrame(animateRing);
-  }
-  animateRing();
-}
-  </script>
-</body>
-</html>
+        let my
