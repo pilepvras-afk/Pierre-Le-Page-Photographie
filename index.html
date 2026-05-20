@@ -2,227 +2,1245 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>À propos - Pierre Le Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Pierre Le Page — Photographie</title>
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" href="LOGO NOIR SUR BLANC.png" media="(prefers-color-scheme: light)" />
+  <link rel="icon" type="image/png" href="Favicon blanc.png" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" type="image/png" href="Favicon blanc.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Josefin+Sans:wght@100;200;300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* ========== RESET & VARIABLES ========== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    :root {
+      --black: #0a0a0a;
+      --white: #ffffff;
+      --gold: #c0a86a;
+      --cream: #f5f0e1;
+      --gray-light: #f8f8f8;
     }
     
-    body {
+    /* SUPPRIMER scroll-behavior pour éviter les conflits avec JS */
+    html { overflow-x: hidden; }
+    
+    body { 
+      font-family: 'Josefin Sans', sans-serif; 
+      background: var(--white); 
+      color: var(--black); 
+      overflow-x: hidden; 
+    }
+    
+    body.no-scroll { overflow: hidden; height: 100%; position: fixed; width: 100%; }
+
+    /* ========== ANIMATION REVEAL ========== */
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.7s, transform 0.7s; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ========== EMAIL & FEEDBACK ========== */
+    .contact-email {
       font-family: 'Josefin Sans', sans-serif;
-      background: #ffffff;
-      color: #0a0a0a;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-    
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 60px 24px;
-    }
-    
-    .back-link {
+      font-weight: 200;
+      font-size: clamp(0.60rem, 4vw, 1.2rem);
+      letter-spacing: 0.07em;
+      color: var(--black);
+      border-bottom: 1px solid #ccc;
+      cursor: pointer;
+      transition: all 0.25s ease;
       display: inline-block;
-      margin-bottom: 40px;
-      color: #c0a86a;
       text-decoration: none;
-      font-size: 0.9rem;
-      letter-spacing: 0.1em;
-      transition: opacity 0.3s;
+      margin-bottom: 15px;
     }
+    .contact-email:hover { color: #555; border-color: #888; opacity: 0.7; }
     
-    .back-link:hover {
-      opacity: 0.7;
+    .email-feedback {
+      position: absolute;
+      white-space: nowrap;
+      background: #faf7f0;
+      color: #2c2c2c;
+      padding: 8px 18px;
+      font-size: 0.85rem;
+      font-weight: 350;
+      letter-spacing: 0.09em;
+      font-family: 'Josefin Sans', sans-serif;
+      pointer-events: none;
+      z-index: 10000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      border-left: 3px solid #634b1f; 
+      transition: opacity 0.35s ease;
     }
-    
-    h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.5rem;
-      font-weight: 400;
-      margin-bottom: 24px;
-    }
-    
-    /* Portrait layout */
-    .portrait-section {
+    .email-feedback.fade-out { opacity: 0; }
+
+    /* ========== SIGNATURE ========== */
+    .signature-section {
+      background: var(--white);
+      padding: 40px 20px 10px;
       display: flex;
-      flex-wrap: wrap;
-      gap: 40px;
-      align-items: flex-start;
-      margin: 40px 0 30px;
+      justify-content: center;
+      align-items: center;
     }
-    
-    .portrait-image {
-      flex: 0 0 180px;
+    .signature-img {
+      height: 110px;
+      width: auto;
+      opacity: 0.95;
+      transition: opacity 0.3s ease;
     }
+    .signature-link {
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .signature-link:hover .signature-img { opacity: 0.8; }
+
+    /* ========== CURSEUR PERSONNALISÉ ========== */
+    .cursor, .cursor-ring { display: none; }
     
-    .portrait-image img {
+    @media (min-width: 769px) {
+      .cursor {
+        position: fixed;
+        width: 8px; height: 8px;
+        background: var(--white);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: width 0.2s, height 0.2s, background 0.2s;
+        display: block;
+      }
+      .cursor-ring {
+        position: fixed;
+        width: 32px; height: 32px;
+        border: 1.75px solid var(--white);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition: width 0.2s, height 0.2s, opacity 0.2s, border-color 0.2s;
+        opacity: 0.7;
+        display: block;
+      }
+      body:has(.hero .hero-chevron:hover) .cursor-ring,
+      body:has(.hero .hero-logo:hover) .cursor-ring { width: 20px !important; height: 20px !important; border-color: var(--gold) !important; }
+      body:has(.hero .hero-chevron:hover) .cursor,
+      body:has(.hero .hero-logo:hover) .cursor { width: 6px !important; height: 6px !important; background: var(--gold) !important; }
+      body:has(.gallery-section .photo-card:hover) .cursor-ring,
+      body:has(.gallery-section .photo-card:hover) .cursor { display: none !important; }
+    }
+
+    /* ========== HERO ========== */
+    .hero {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      height: auto;
-      border-radius: 50%;
-      object-fit: cover;
-      aspect-ratio: 1 / 1;
-      box-shadow: 0 12px 28px rgba(0,0,0,0.08);
-      border: 2px solid #f0ede6;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    
-    .portrait-image img:hover {
-      transform: scale(1.02);
-      box-shadow: 0 20px 30px rgba(0,0,0,0.12);
-    }
-    
-    .bio-text {
-      flex: 1;
-    }
-    
-    p {
-      font-weight: 300;
-      font-size: 1rem;
-      color: #444;
-      margin-bottom: 20px;
-    }
-    
-    .signature-note {
-      margin: 30px 0 35px;
-      font-style: italic;
-      border-left: 3px solid #c0a86a;
-      padding-left: 20px;
-      color: #5a5a5a;
-      font-size: 0.95rem;
-    }
-    
-    /* Panorama image section */
-    .panorama-section {
-      margin: 30px 0 20px;
-      border-radius: 12px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      background: #faf9f5;
+      background: #1a1a1a;
+      z-index: 1;
+    }
+    .hero, .hero *, .hero-content, .hero-logo, .hero-chevron, .hero-name, .hero-sub, .hero-bg, .hero-overlay { cursor: none !important; }
+    
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('red forest.jpg?w=1800&q=90');
+      background-size: cover;
+      background-position: center 30%;
+      filter: brightness(0.6) saturate(0.85);
+      animation: breatheZoom 26s ease-in-out infinite;
     }
     
-    .panorama-section:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 32px rgba(0,0,0,0.12);
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(30,20,0,0.1) 0%, rgba(0,0,0,0.2) 100%);
     }
     
-    .panorama-image {
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      user-select: none;
+      transform: translateY(110px);
+    }
+    
+    .hero-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 12vw, 9em);
+      color: var(--white);
+      letter-spacing: 0.05em;
+      line-height: 1;
+      text-shadow: 0 2px 40px rgba(0,0,0,0.25);
+    }
+    
+    .hero-sub {
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 200;
+      font-size: clamp(0.75rem, 2vw, 0.90rem);
+      letter-spacing: 0.6em;
+      color: rgba(255,255,255,0.88);
+      margin-top: 8px;
+      text-transform: uppercase;
+    }
+    
+    .hero-logo {
+      margin-top: 220px;
+      width: min(68px, 10vw);
+      height: min(68px, 10vw);
+      min-width: 36px;
+      min-height: 36px;
+      border: 2.2px solid rgba(255,255,255,0.8);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: pointer;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .hero-logo:hover { opacity: 0.8; transform: scale(1.045); }
+    .hero-logo img {
+      width: min(46px, 7vw);
+      height: min(46px, 7vw);
+      min-width: 24px;
+      min-height: 24px;
+      object-fit: contain;
+      pointer-events: none;
+    }
+    
+    .hero-chevron {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      cursor: pointer;
+      animation: bounceDown 5s infinite;
+    }
+    .hero-chevron svg { width: 34px; height: 34px; stroke: rgba(255,255,255,0.75); fill: none; stroke-width: 1.5; }
+    
+    @keyframes bounceDown {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
+    }
+    
+    @keyframes breatheZoom {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.08); }
+      60% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    /* ========== GALERIE 3:2 - 3 COLONNES ========== */
+    .gallery-section {
+      position: relative;
+      z-index: 2;
+      background: var(--white);
+      margin-top: 100vh;
+      padding: 60px 0px 40px;
+    }
+    
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      max-width: 100%;
+    }
+    
+    .photo-card {
+      position: relative;
+      overflow: hidden;
+      background: #111;
+      cursor: pointer;
+      aspect-ratio: 3 / 2;
+    }
+    
+    .photo-card img {
       width: 100%;
-      display: block;
-    }
-    
-    .panorama-image img {
-      width: 100%;
-      height: auto;
-      display: block;
+      height: 100%;
       object-fit: cover;
-      aspect-ratio: 16 / 6;
-      transition: opacity 0.4s;
+      display: block;
+      transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s;
+      filter: brightness(0.95) saturate(0.95);
+      pointer-events: none;
     }
     
-    .panorama-caption {
-      padding: 12px 20px;
-      background: #fefcf8;
+    .photo-card:hover img {
+      transform: scale(1.05);
+      filter: brightness(1.02) saturate(1.02);
+    }
+    
+    .photo-card.span-2x2 {
+      grid-column: span 2;
+      grid-row: span 2;
+      aspect-ratio: 3 / 2;
+    }
+    
+    .photo-card.span-2x2 img {
+      object-fit: cover;
+    }
+    
+    .expand-btn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.75);
+      z-index: 2;
+      width: 46px; height: 46px;
+      border: 1.5px solid rgba(255,255,255,0.8);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+    }
+    
+    .expand-btn svg {
+      width: 17px; height: 17px;
+      fill: none; stroke: white;
+      stroke-width: 1.8;
+    }
+    
+    .photo-card:hover .expand-btn {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    
+    @media (max-width: 768px) {
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4x;
+        padding: 0;  
+      }
+      .photo-card.span-2x2 {
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+      .expand-btn {
+        width: 38px;
+        height: 38px;
+      }
+      .expand-btn svg {
+        width: 14px;
+        height: 14px;
+      }
+      .gallery-section {
+        padding-top: 40px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        padding: 0;  
+      }
+      .photo-card.span-2x2 {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+    }
+
+/* ========== CONTACT - ÉPURÉ & ÉLÉGANT ========== */
+.contact-section { 
+  position: relative;
+  z-index: 2;
+  background: var(--white); 
+  padding: 40px 8vw 60px;
+}
+
+.contact-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+  margin-bottom: 50px;
+}
+
+/* Colonne gauche */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-info h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 5vw, 3.8rem);
+  font-weight: 400;
+  color: var(--black);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-email {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  color: var(--black);
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+  padding-bottom: 4px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-block;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.contact-email:hover {
+  color: #555;
+  border-bottom-color: rgba(0,0,0,0.3);
+  opacity: 0.7;
+}
+
+.contact-phone {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  color: var(--black);
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Colonne droite */
+.contact-message {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-end;
+}
+
+.contact-box {
+  border: 1px solid rgba(0,0,0,0.15);
+  padding: 32px 36px;
+  max-width: 420px;
+  width: 100%;
+  transition: border-color 0.3s ease;
+}
+
+.contact-box:hover {
+  border-color: rgba(0,0,0,0.3);
+}
+
+.contact-box p {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.22em;
+  line-height: 1.9;
+  color: #4a4a4a;
+  text-transform: uppercase;
+  margin: 0;
+  text-align: center;
+}
+
+.contact-cta {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 500;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  color: #8a8a8a;
+  text-align: right;
+  max-width: 420px;
+  width: 100%;
+  transition: color 0.3s ease;
+}
+
+.contact-cta:hover {
+  color: #5a5a5a;
+}
+
+/* Image panoramique */
+.contact-photo {
+  width: 100%;
+  aspect-ratio: 16/4.5;
+  overflow: hidden;
+  cursor: none !important;
+  margin-top : 160px;
+}
+
+.contact-photo:hover {
+  opacity: 1;
+}
+
+.contact-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 50%;
+  filter: saturate(0.6) brightness(0.96);
+  display: block;
+  pointer-events: none;
+  cursor: none !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contact-section {
+    padding: 30px 6vw 40px;
+  }
+  
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+  
+  .contact-info {
+    align-items: center;
+    text-align: center;
+  }
+  
+  .contact-details {
+    align-items: center;
+  }
+  
+  .contact-email {
+    width: auto;
+  }
+  
+  .contact-message {
+    align-items: center;
+  }
+  
+  .contact-box {
+    max-width: 100%;
+    padding: 28px 24px;
+  }
+  
+  .contact-box p {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+  }
+  
+  .contact-cta {
+    text-align: center;
+    font-size: 0.7rem;
+  }
+  
+  .contact-photo {
+    aspect-ratio: 16/5;
+    opacity: 0.8;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-section {
+    padding: 25px 5vw 35px;
+  }
+  
+  .contact-grid {
+    gap: 30px;
+  }
+  
+  .contact-box {
+    padding: 24px 20px;
+  }
+  
+  .contact-box p {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+  }
+}
+    /* ========== FOOTER ========== */
+    footer { 
+      position: relative;
+      z-index: 2;
+      background: var(--white); 
+      padding: 10px 24px 32px; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      gap: 6px; 
+    }
+    
+    .footer-copy {
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 400;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: #999;
+      text-align: center;
+    }
+
+    /* ========== LIGHTBOX ========== */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      background: rgba(0, 0, 0, 0);
+    }
+    
+    .lightbox.active {
+      opacity: 1;
+      visibility: visible;
+      background: rgba(0, 0, 0, 0.96);
+    }
+    
+    .lb-scroll-container {
+      position: absolute;
+      inset: 0;
+      overflow: auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    
+    .lb-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 100%;
+      min-height: 100%;
+      padding: 2rem;
+    }
+    
+    #lbImg {
+      max-width: 90vw;
+      max-height: 85vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      cursor: default;
+      transition: transform 0.15s ease-out;
+    }
+    
+    #lbImg.zoomed { cursor: grab; }
+    #lbImg.zoomed:active { cursor: grabbing; }
+    
+    .lb-nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(20, 20, 20, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1002;
+      transition: all 0.2s ease;
+      border-radius: 50%;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    
+    .lb-nav.visible { opacity: 1; visibility: visible; pointer-events: auto; }
+    .lb-nav:hover {
+      transform: translateY(-50%) scale(1.12);
+      background: rgba(0, 0, 0, 0.85);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    
+    .lb-prev { left: 24px; }
+    .lb-next { right: 24px; }
+    
+    .lb-close {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      background: rgba(20, 20, 20, 0.7);
+      backdrop-filter: blur(12px);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+      z-index: 1002;
+      transition: all 0.2s ease;
+    }
+    
+    .lb-close:hover {
+      transform: scale(1.08);
+      background: rgba(0, 0, 0, 0.85);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    
+    .lb-counter {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      padding: 6px 16px;
+      border-radius: 30px;
       font-size: 0.8rem;
-      color: #8a7a60;
-      text-align: center;
-      letter-spacing: 0.3px;
-      font-style: normal;
-      border-top: 1px solid #ede9df;
+      letter-spacing: 0.1em;
+      color: rgba(255, 255, 255, 0.8);
+      font-family: 'Josefin Sans', sans-serif;
+      z-index: 1002;
+      white-space: nowrap;
     }
     
-    @media (max-width: 560px) {
-      .portrait-section {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 24px;
+    /* ========== BOUTON RETOUR HAUT ========== */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 100;
+      background: transparent;
+      padding: 12px 8px;
+    }
+    
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .back-to-top:hover {
+      transform: translateY(-3px);
+    }
+    
+    .back-to-top svg {
+      width: 28px;
+      height: 47px;
+      stroke: var(--gold);
+      stroke-width: 1.3;
+      fill: none;
+      transition: stroke 0.3s ease, transform 0.2s ease;
+    }
+    
+    .back-to-top:hover svg {
+      transform: translateY(-2px);
+    }
+    
+    @media (max-width: 768px) {
+      .back-to-top {
+        bottom: 20px;
+        right: 20px;
       }
-      
-      .bio-text {
-        text-align: left;
-      }
-      
-      .signature-note {
-        text-align: left;
-      }
-      
-      .container {
-        padding: 40px 20px;
-      }
-      
-      .panorama-image img {
-        aspect-ratio: 16 / 5;
+      .back-to-top svg {
+        width: 28px;
+        height: 42px;
       }
     }
     
-    hr {
-      margin: 32px 0 20px;
-      border: 0;
-      height: 1px;
-      background: linear-gradient(90deg, #e0dbcf, #c0a86a, #e0dbcf);
+    @media (max-width: 768px) {
+      .contact-top { grid-template-columns: 1fr; gap: 32px; }
+      .contact-section { padding: 56px 6vw 0; }
+      .contact-photo { aspect-ratio: 16/7; }
+      .lb-nav { width: 44px; height: 44px; }
+      .lb-prev { left: 12px; }
+      .lb-next { right: 12px; }
     }
     
-    .small-credit {
-      font-size: 0.75rem;
-      color: #aaa;
-      margin-top: 28px;
-      text-align: center;
-      letter-spacing: 0.3px;
+    @media (max-width: 460px) {
+      .lb-nav { display: none; }
     }
+    
+    /* Forcer l'affichage de la signature */
+    .signature-section {
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      position: relative;
+      z-index: 10;
+      min-height: 160px;
+    }
+    
+    .signature-container {
+      display: block !important;
+    }
+    
+    .signature-img {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 0.95 !important;
+    }
+    /* Masquer le curseur personnalisé dans la lightbox */
+.lightbox.active ~ .cursor,
+.lightbox.active ~ .cursor-ring,
+body:has(.lightbox.active) .cursor,
+body:has(.lightbox.active) .cursor-ring,
+.lightbox .cursor,
+.lightbox .cursor-ring,
+.lightbox.active .cursor,
+.lightbox.active .cursor-ring {
+  display: none !important;
+}
+
+/* Optionnel : forcer le curseur par défaut dans la lightbox */
+.lightbox,
+.lightbox * {
+  cursor: default;
+}
+
+.lightbox button,
+.lightbox .lb-nav,
+.lightbox .lb-close {
+  cursor: pointer;
+}
   </style>
 </head>
 <body>
-  <div class="container">
-    <a href="index.html" class="back-link">← Retour à l'accueil</a>
-    <h1>À propos</h1>
-    
-    <div class="portrait-section">
-      <div class="portrait-image">
-        <!-- Portrait style biographie : élégant, naturaliste, lumière douce -->
-        <img src="https://picsum.photos/id/64/400/400" 
-             alt="Portrait de Pierre Le Page, photographe naturaliste"
-             srcset="https://picsum.photos/id/64/300/300 300w, 
-                     https://picsum.photos/id/64/400/400 400w"
-             sizes="(max-width: 560px) 160px, 180px">
+
+  <section class="hero" id="top">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-name">Pierre Le Page</h1>
+      <p class="hero-sub">Photographie</p>
+      <a href="#gallery" class="hero-logo" id="heroLogo"><img src="Favicon blanc.png" alt="Logo Pierre Le Page" /></a>
+    </div>
+    <div class="hero-chevron">
+      <svg viewBox="0 0 34 34"><polyline points="7,12 17,22 27,12"/></svg>
+    </div>
+  </section>
+
+  <section class="gallery-section" id="gallery">
+    <div class="gallery-grid" id="galleryGrid">
+      <div class="photo-card reveal"><img src="59.webp" alt="Photographie 1" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
+      <div class="photo-card reveal"><img src="27.webp" alt="Photographie 2" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
+      <div class="photo-card reveal"><img src="64.webp" alt="Photographie 3" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
+      <div class="photo-card span-2x2 reveal"><img src="02.webp" alt="Photographie panoramique 1" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
+      <div class="photo-card reveal"><img src="70.webp" alt="Photographie 4" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
+      <div class="photo-card reveal"><img src="36.webp" alt="Photographie 5" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
+      <div class="photo-card reveal"><img src="73.webp" alt="Photographie 6" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
+      <div class="photo-card reveal"><img src="21.webp" alt="Photographie 7" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
+      <div class="photo-card reveal"><img src="34.webp" alt="Photographie 8" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
+      <div class="photo-card reveal"><img src="00.webp" alt="Photographie 9" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
+      <div class="photo-card span-2x2 reveal"><img src="54.webp" alt="Photographie panoramique 2" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
+      <div class="photo-card reveal"><img src="43.webp" alt="Photographie 10" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
+      <div class="photo-card reveal"><img src="05.webp" alt="Photographie 11" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
+      <div class="photo-card reveal"><img src="16.webp" alt="Photographie 12" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>
+<div class="photo-card reveal"><img src="08.webp" alt="Photographie 13" loading="lazy" /><div class="expand-btn"><svg viewBox="0 0 24 24"><path d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/></svg></div></div>  </section>
+
+ <section class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="contact-grid reveal">
+      <!-- Colonne gauche -->
+      <div class="contact-info">
+        <h2>Contact</h2>
+        <div class="contact-details">
+          <span class="contact-email" id="emailToCopy">contact.pierrelepage@gmail.com</span>
+          <span class="contact-phone"></span>
+        </div>
       </div>
-      <div class="bio-text">
-        <p>Photographe naturaliste et romantique, Pierre Le Page capture l'essence des paysages et des émotions à travers son objectif. Basé en France, il explore la beauté silencieuse de la nature et la poésie des instants fugaces.</p>
-        <p>Son regard se pose aussi bien sur les brumes matinales des vallées que sur les détails infimes — une goutte d’eau, une plume oubliée, la lumière rasante d’un couchant. Chaque image devient une conversation intime avec le monde vivant, entre rigueur documentaire et rêverie picturale.</p>
+      
+      <!-- Colonne droite -->
+      <div class="contact-message">
+        <div class="contact-box">
+          <p>Une de mes photos vous inspire ?<br>Vous cherchez à valoriser un lieu, à illustrer un projet ?</p>
+        </div>
+        <p class="contact-cta">Contactez-moi et je tâcherai de vous répondre dans les meilleurs délais.</p>
       </div>
     </div>
     
-    <hr />
-    
-    <p>Autodidacte devenu amoureux des grands espaces, Pierre arpente depuis plus de quinze ans les côtes bretonnes, les forêts d’Ardèche et les Alpes silencieuses. Il privilégie les prises de vue en argentique et les tirages limités, dans le souci constant d’un rendu sensible et authentique. Ses travaux ont été exposés à Rennes, Lyon et Bruxelles, et plusieurs de ses séries sont conservées dans des collections privées dédiées à la photographie de nature.</p>
-    
-    <div class="signature-note">
-      « La photographie est une manière de retenir le souffle du monde. » <br />— Pierre Le Page
-    </div>
-    
-    <!-- Image type panorama : paysage naturel immersif -->
-    <div class="panorama-section">
-      <div class="panorama-image">
-        <img src="https://picsum.photos/id/104/1600/600" 
-             alt="Vaste paysage naturel - Brume matinale et vallée silencieuse"
-             srcset="https://picsum.photos/id/104/800/300 800w,
-                     https://picsum.photos/id/104/1200/450 1200w,
-                     https://picsum.photos/id/104/1600/600 1600w"
-             sizes="(max-width: 1000px) 100vw, 1000px"
-             loading="lazy">
-      </div>
-      <div class="panorama-caption">
-        📷 Vallée de la Vézère · Brume d'automne — Pierre Le Page
-      </div>
-    </div>
-    
-    <div class="small-credit">
-      Portrait naturaliste &nbsp;•&nbsp; Regard sur les grands espaces
+    <div class="contact-photo reveal">
+      <img src="DSC_0257 16x4.5.jpg" alt="Paysage panoramique" loading="lazy" />
     </div>
   </div>
+</section>
+
+  <div class="signature-section">
+    <div class="signature-container">
+      <a href="à propos.html" class="signature-link">
+        <img src="Signature finale.png" alt="Signature Pierre Le Page" class="signature-img" />
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <p class="footer-copy">Pierre Le Page ©2026 | Photographie naturaliste et romantique</p>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <div class="lb-scroll-container" id="lbScrollContainer">
+      <div class="lb-inner">
+        <img id="lbImg" src="" alt="" draggable="false" />
+      </div>
+    </div>
+    <button class="lb-close" id="lbClose">×</button>
+    <button class="lb-nav lb-prev" id="lbPrev">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+    <button class="lb-nav lb-next" id="lbNext">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+    <div class="lb-counter" id="lbCounter"></div>
+  </div>
+
+  <div class="back-to-top" id="backToTop">
+    <svg viewBox="0 0 24 48">
+      <polyline points="12 4 12 42" />
+      <polyline points="6 14 12 4 18 14" />
+      <line x1="12" y1="36" x2="16" y2="28" stroke-width="1.2" />
+    </svg>
+  </div>
+
+  <script>
+    // Sécurité
+    document.addEventListener('contextmenu', (e) => { if (e.target.tagName === 'IMG') e.preventDefault(); });
+    document.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key === 's') e.preventDefault(); });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => { 
+        if (e.isIntersecting) { 
+          setTimeout(() => e.target.classList.add('visible'), i * 60); 
+          observer.unobserve(e.target); 
+        } 
+      });
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Lightbox
+    const cards = Array.from(document.querySelectorAll('.photo-card'));
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbCounter = document.getElementById('lbCounter');
+    const lbPrev = document.getElementById('lbPrev');
+    const lbNext = document.getElementById('lbNext');
+    const lbClose = document.getElementById('lbClose');
+    const scrollContainer = document.getElementById('lbScrollContainer');
+
+    let currentIndex = 0;
+    let currentScale = 1;
+    let isZoomed = false;
+    let posX = 0, posY = 0;
+    let lightboxScrollPosition = 0;
+    let activeAnimation = null;
+
+    function updateNavButtonsVisibility(e) {
+      if (!lightbox.classList.contains('active')) return;
+      if (isZoomed) {
+        lbPrev.classList.remove('visible');
+        lbNext.classList.remove('visible');
+        return;
+      }
+      const mouseX = e.clientX;
+      const windowWidth = window.innerWidth;
+      mouseX < 300 ? lbPrev.classList.add('visible') : lbPrev.classList.remove('visible');
+      (windowWidth - mouseX < 300) ? lbNext.classList.add('visible') : lbNext.classList.remove('visible');
+    }
+
+    function disableScroll() { document.body.classList.add('no-scroll'); }
+    function enableScroll() { document.body.classList.remove('no-scroll'); }
+
+    function resetZoom() {
+      currentScale = 1;
+      isZoomed = false;
+      posX = 0; posY = 0;
+      lbImg.classList.remove('zoomed');
+      lbImg.style.transform = 'scale(1)';
+      lbImg.style.cursor = 'default';
+      if (scrollContainer) { scrollContainer.scrollTop = 0; scrollContainer.scrollLeft = 0; }
+    }
+
+    function updateImage() {
+      const img = cards[currentIndex].querySelector('img');
+      let src = img.src;
+      lbImg.src = src;
+      lbImg.alt = img.alt;
+      lbCounter.textContent = `${currentIndex + 1} / ${cards.length}`;
+      resetZoom();
+    }
+
+    function openLightbox(index) {
+      lightboxScrollPosition = window.scrollY;
+      currentIndex = index;
+      updateImage();
+      lightbox.classList.add('active');
+      disableScroll();
+      document.addEventListener('mousemove', updateNavButtonsVisibility);
+    }
+
+    function closeLightbox() {
+      const savedPosition = lightboxScrollPosition;
+      resetZoom();
+      lightbox.classList.remove('active');
+      enableScroll();
+      document.removeEventListener('mousemove', updateNavButtonsVisibility);
+      lbPrev.classList.remove('visible');
+      lbNext.classList.remove('visible');
+      setTimeout(() => { window.scrollTo(0, savedPosition); }, 50);
+    }
+
+    function nextImage() { currentIndex = (currentIndex + 1) % cards.length; updateImage(); }
+    function prevImage() { currentIndex = (currentIndex - 1 + cards.length) % cards.length; updateImage(); }
+
+    cards.forEach((card, i) => { card.addEventListener('click', () => openLightbox(i)); });
+    lbClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox || e.target === scrollContainer) closeLightbox(); });
+    lbPrev.addEventListener('click', (e) => { e.stopPropagation(); if (!isZoomed) prevImage(); });
+    lbNext.addEventListener('click', (e) => { e.stopPropagation(); if (!isZoomed) nextImage(); });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') { closeLightbox(); e.preventDefault(); }
+      if (!isZoomed) {
+        if (e.key === 'ArrowLeft') { prevImage(); e.preventDefault(); }
+        if (e.key === 'ArrowRight') { nextImage(); e.preventDefault(); }
+      }
+    });
+
+    // Zoom molette
+    lightbox.addEventListener('wheel', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      e.preventDefault();
+      const ZOOM_SPEED = 0.08;
+      const MIN_SCALE = 1;
+      const MAX_SCALE = 1.4;
+      const oldScale = currentScale;
+      let newScale = currentScale + (e.deltaY > 0 ? -ZOOM_SPEED : ZOOM_SPEED);
+      newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, newScale));
+      if (Math.abs(newScale - oldScale) < 0.001) return;
+      
+      const rect = lbImg.getBoundingClientRect();
+      let mouseX = (e.clientX - rect.left) / rect.width;
+      let mouseY = (e.clientY - rect.top) / rect.height;
+      mouseX = Math.min(0.9, Math.max(0.1, mouseX));
+      mouseY = Math.min(0.9, Math.max(0.1, mouseY));
+      
+      if (newScale > 1.02) {
+        const scaleFactor = newScale / oldScale;
+        const deltaX = (mouseX - 0.5) * rect.width;
+        const deltaY = (mouseY - 0.5) * rect.height;
+        posX = posX * scaleFactor + deltaX * (1 - scaleFactor);
+        posY = posY * scaleFactor + deltaY * (1 - scaleFactor);
+        const newWidth = rect.width * newScale;
+        const newHeight = rect.height * newScale;
+        const maxX = Math.max(0, (newWidth - window.innerWidth) / 2);
+        const maxY = Math.max(0, (newHeight - window.innerHeight) / 2);
+        posX = Math.min(maxX, Math.max(-maxX, posX));
+        posY = Math.min(maxY, Math.max(-maxY, posY));
+      } else { posX = 0; posY = 0; }
+      
+      currentScale = newScale;
+      isZoomed = currentScale > 1.05;
+      lbImg.classList.toggle('zoomed', isZoomed);
+      lbImg.style.cursor = isZoomed ? 'grab' : 'default';
+      lbImg.style.transform = `scale(${currentScale}) translate(${posX}px, ${posY}px)`;
+    }, { passive: false });
+
+    // Swipe tactile
+    let touchStart = 0;
+    lightbox.addEventListener('touchstart', (e) => { touchStart = e.touches[0].clientX; });
+    lightbox.addEventListener('touchend', (e) => {
+      if (isZoomed) return;
+      const delta = e.changedTouches[0].clientX - touchStart;
+      if (Math.abs(delta) > 50) { delta < 0 ? nextImage() : prevImage(); }
+    });
+
+    // Curseur personnalisé
+    (function() {
+      const hero = document.querySelector('.hero');
+      const cursor = document.createElement('div');
+      cursor.className = 'cursor';
+      const cursorRing = document.createElement('div');
+      cursorRing.className = 'cursor-ring';
+      document.body.appendChild(cursor);
+      document.body.appendChild(cursorRing);
+      
+      let mouseX = 0, mouseY = 0;
+      let ringX = 0, ringY = 0;
+      let isOverHero = false;
+      
+      function checkIfOverHero(e) {
+        const rect = hero.getBoundingClientRect();
+        isOverHero = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
+        cursor.style.display = isOverHero ? 'block' : 'none';
+        cursorRing.style.display = isOverHero ? 'block' : 'none';
+      }
+      
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursor.style.left = mouseX + 'px';
+        cursor.style.top = mouseY + 'px';
+        checkIfOverHero(e);
+      });
+      
+      function animateRing() {
+        if (isOverHero) {
+          ringX += (mouseX - ringX) * 0.35;
+          ringY += (mouseY - ringY) * 0.35;
+          cursorRing.style.left = ringX + 'px';
+          cursorRing.style.top = ringY + 'px';
+        }
+        requestAnimationFrame(animateRing);
+      }
+      animateRing();
+    })();
+
+    // Copie email
+    const emailElement = document.getElementById('emailToCopy');
+    if (emailElement) {
+      emailElement.addEventListener('click', (e) => {
+        e.preventDefault();
+        const email = 'pilep.vras@gmail.com';
+        navigator.clipboard.writeText(email);
+        
+        const feedback = document.createElement('div');
+        feedback.className = 'email-feedback';
+        feedback.textContent = '✓ Copié';
+        
+        const rect = emailElement.getBoundingClientRect();
+        feedback.style.left = (rect.right + window.scrollX + 20) + 'px';
+        feedback.style.top = (rect.top + window.scrollY + rect.height / 2) + 'px';
+        feedback.style.transform = 'translateY(-50%)';
+        
+        document.body.appendChild(feedback);
+        setTimeout(() => {
+          feedback.classList.add('fade-out');
+          setTimeout(() => feedback.remove(), 1000);
+        }, 2000);
+      });
+    }
+
+    // Fonction de défilement fluide optimisée
+    function smoothScrollTo(targetElement, duration = 800) {
+      if (activeAnimation) {
+        cancelAnimationFrame(activeAnimation);
+      }
+      
+      const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+      const startPosition = window.scrollY;
+      const distance = targetPosition - startPosition;
+      let startTime = null;
+      
+      function easeInOutCubic(t) {
+        return t < 0.5 
+          ? 4 * t * t * t 
+          : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+      
+      function animation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        const ease = easeInOutCubic(progress);
+        
+        window.scrollTo(0, startPosition + (distance * ease));
+        
+        if (timeElapsed < duration) {
+          activeAnimation = requestAnimationFrame(animation);
+        } else {
+          activeAnimation = null;
+        }
+      }
+      
+      activeAnimation = requestAnimationFrame(animation);
+    }
+
+    // Défilement vers la galerie
+    const chevron = document.querySelector('.hero-chevron');
+    const logo = document.getElementById('heroLogo');
+    const galleryTarget = document.getElementById('gallery');
+    
+    function scrollToGallery(e) {
+      e.preventDefault();
+      if (galleryTarget) {
+        smoothScrollTo(galleryTarget, 800);
+      }
+    }
+    
+    if (chevron) chevron.addEventListener('click', scrollToGallery);
+    if (logo) logo.addEventListener('click', scrollToGallery);
+
+    // Bouton retour en haut
+    const backToTopBtn = document.getElementById('backToTop');
+    
+    function checkBackToTopVisibility() {
+      if (!galleryTarget || !backToTopBtn) return;
+      const triggerPoint = galleryTarget.offsetTop + (galleryTarget.offsetHeight * 0.6);
+      backToTopBtn.classList.toggle('visible', window.scrollY > triggerPoint);
+    }
+    
+   function scrollToTopHandler(e) {
+  e.preventDefault();
+  const startPosition = window.scrollY;
+  const duration = 2000;
+  let startTime = null;
+  
+  function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+  
+  function animation(currentTime) {
+    if (startTime === null) startTime = currentTime;
+    const timeElapsed = currentTime - startTime;
+    const progress = Math.min(timeElapsed / duration, 1);
+    const ease = easeOutCubic(progress);
+    
+    window.scrollTo(0, startPosition * (1 - ease));
+    
+    if (timeElapsed < duration) {
+      requestAnimationFrame(animation);
+    }
+  }
+  
+  requestAnimationFrame(animation);
+}
+// Connecter le bouton retour en haut
+if (backToTopBtn) {
+  backToTopBtn.addEventListener('click', scrollToTopHandler);
+}
+
+window.addEventListener('scroll', checkBackToTopVisibility);
+window.addEventListener('load', () => {
+  window.scrollTo(0, 0);
+  checkBackToTopVisibility();
+});
+  </script>
 </body>
 </html>
