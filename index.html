@@ -272,14 +272,22 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s;
+      .photo-card img {
+  transition: transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1), filter 0.5s ease-out;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
       filter: brightness(0.95) saturate(0.95);
       pointer-events: none;
     }
     
-    .photo-card:hover img {
-      transform: scale(1.05);
-      filter: brightness(1.02) saturate(1.02);
+   .photo-card:hover img {
+  transform: scale(1.08);
+  filter: brightness(1.03) saturate(1.03);
+  transition-timing-function: cubic-bezier(0.2, 0.9, 0.4, 1.1);
     }
     
     .photo-card.span-2x2 {
