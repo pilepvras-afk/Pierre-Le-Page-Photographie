@@ -43,7 +43,40 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: 2.5rem;
       font-weight: 400;
-      margin-bottom: 30px;
+      margin-bottom: 24px;
+    }
+    
+    /* Portrait layout */
+    .portrait-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      align-items: flex-start;
+      margin: 40px 0 30px;
+    }
+    
+    .portrait-image {
+      flex: 0 0 180px;
+    }
+    
+    .portrait-image img {
+      width: 100%;
+      height: auto;
+      border-radius: 50%;
+      object-fit: cover;
+      aspect-ratio: 1 / 1;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+      border: 2px solid #f0ede6;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .portrait-image img:hover {
+      transform: scale(1.02);
+      box-shadow: 0 20px 30px rgba(0,0,0,0.12);
+    }
+    
+    .bio-text {
+      flex: 1;
     }
     
     p {
@@ -52,14 +85,84 @@
       color: #444;
       margin-bottom: 20px;
     }
+    
+    .signature-note {
+      margin-top: 20px;
+      font-style: italic;
+      border-left: 3px solid #c0a86a;
+      padding-left: 20px;
+      color: #5a5a5a;
+      font-size: 0.95rem;
+    }
+    
+    @media (max-width: 560px) {
+      .portrait-section {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 24px;
+      }
+      
+      .bio-text {
+        text-align: left;
+      }
+      
+      .signature-note {
+        text-align: left;
+      }
+      
+      .container {
+        padding: 40px 20px;
+      }
+    }
+    
+    hr {
+      margin: 32px 0 20px;
+      border: 0;
+      height: 1px;
+      background: linear-gradient(90deg, #e0dbcf, #c0a86a, #e0dbcf);
+    }
+    
+    .small-credit {
+      font-size: 0.75rem;
+      color: #aaa;
+      margin-top: 28px;
+      text-align: center;
+      letter-spacing: 0.3px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <a href="index.html" class="back-link">← Retour à l'accueil</a>
     <h1>À propos</h1>
-    <p>Photographe naturaliste et romantique, Pierre Le Page capture l'essence des paysages et des émotions à travers son objectif.</p>
-    <p>Basé en France, il explore la beauté silencieuse de la nature et la poésie des instants fugaces.</p>
+    
+    <div class="portrait-section">
+      <div class="portrait-image">
+        <!-- Portrait style biographie : élégant, naturaliste, lumière douce -->
+        <img src="https://picsum.photos/id/64/400/400" 
+             alt="Portrait de Pierre Le Page, photographe naturaliste"
+             srcset="https://picsum.photos/id/64/300/300 300w, 
+                     https://picsum.photos/id/64/400/400 400w"
+             sizes="(max-width: 560px) 160px, 180px">
+      </div>
+      <div class="bio-text">
+        <p>Photographe naturaliste et romantique, Pierre Le Page capture l'essence des paysages et des émotions à travers son objectif. Basé en France, il explore la beauté silencieuse de la nature et la poésie des instants fugaces.</p>
+        <p>Son regard se pose aussi bien sur les brumes matinales des vallées que sur les détails infimes — une goutte d’eau, une plume oubliée, la lumière rasante d’un couchant. Chaque image devient une conversation intime avec le monde vivant, entre rigueur documentaire et rêverie picturale.</p>
+      </div>
+    </div>
+    
+    <hr />
+    
+    <p>Autodidacte devenu amoureux des grands espaces, Pierre arpente depuis plus de quinze ans les côtes bretonnes, les forêts d’Ardèche et les Alpes silencieuses. Il privilégie les prises de vue en argentique et les tirages limités, dans le souci constant d’un rendu sensible et authentique. Ses travaux ont été exposés à Rennes, Lyon et Bruxelles, et plusieurs de ses séries sont conservées dans des collections privées dédiées à la photographie de nature.</p>
+    
+    <div class="signature-note">
+      « La photographie est une manière de retenir le souffle du monde. » <br />— Pierre Le Page
+    </div>
+    
+    <div class="small-credit">
+      Portrait &nbsp;•&nbsp; Vision naturaliste
+    </div>
   </div>
 </body>
 </html>
