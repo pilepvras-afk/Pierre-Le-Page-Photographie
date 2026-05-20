@@ -1081,53 +1081,62 @@ body:has(.lightbox.active) .cursor-ring,
       if (Math.abs(delta) > 50) { delta < 0 ? nextImage() : prevImage(); }
     });
 
-    // Curseur personnalisé
-    (function() {
-      const hero = document.querySelector('.hero');
-      const cursor = document.createElement('div');
-      cursor.className = 'cursor';
-      const cursorRing = document.createElement('div');
-      cursorRing.className = 'cursor-ring';
-      document.body.appendChild(cursor);
-      document.body.appendChild(cursorRing);
-      
-      let mouseX = 0, mouseY = 0;
-      let ringX = 0, ringY = 0;
-      let isOverHero = false;
-      
-     function checkIfOverHero(e) {
-  // Vérifier si on est sur la section hero
-  const heroRect = hero.getBoundingClientRect();
-  const isOverHero = e.clientX >= heroRect.left && e.clientX <= heroRect.right && 
-                     e.clientY >= heroRect.top && e.clientY <= heroRect.bottom;
+// Curseur personnalisé
+(function() {
+  const hero = document.querySelector('.hero');
+  const cursor = document.createElement('div');
+  cursor.className = 'cursor';
+  const cursorRing = document.createElement('div');
+  cursorRing.className = 'cursor-ring';
+  document.body.appendChild(cursor);
+  document.body.appendChild(cursorRing);
   
-  // Vérifier si on est sur la photo panoramique dans la section contact
-  const contactPhoto = document.querySelector('.contact-photo');
-  let isOverContactPhoto = false;
+  let mouseX = 0, mouseY = 0;
+  let ringX = 0, ringY = 0;
+  let isOverHeroGlobal = false;
+  let isOverContactPhotoGlobal = false;
   
-  if (contactPhoto) {
-    const photoRect = contactPhoto.getBoundingClientRect();
-    isOverContactPhoto = e.clientX >= photoRect.left && e.clientX <= photoRect.right && 
-                         e.clientY >= photoRect.top && e.clientY <= photoRect.bottom;
+  function checkIfOverHero(e) {
+    // Vérifier si on est sur la section hero
+    const heroRect = hero.getBoundingClientRect();
+    isOverHeroGlobal = e.clientX >= heroRect.left && e.clientX <= heroRect.right && 
+                       e.clientY >= heroRect.top && e.clientY <= heroRect.bottom;
+    
+    // Vérifier si on est sur la photo panoramique dans la section contact
+    const contactPhoto = document.querySelector('.contact-photo');
+    isOverContactPhotoGlobal = false;
+    
+    if (contactPhoto) {
+      const photoRect = contactPhoto.getBoundingClientRect();
+      isOverContactPhotoGlobal = e.clientX >= photoRect.left && e.clientX <= photoRect.right && 
+                                 e.clientY >= photoRect.top && e.clientY <= photoRect.bottom;
+    }
+    
+    // Afficher le curseur uniquement sur hero OU sur la photo contact
+    const shouldShowCursor = isOverHeroGlobal || isOverContactPhotoGlobal;
+    cursor.style.display = shouldShowCursor ? 'block' : 'none';
+    cursorRing.style.display = shouldShowCursor ? 'block' : 'none';
   }
   
-  // Afficher le curseur uniquement sur hero OU sur la photo contact
-  const shouldShowCursor = isOverHero || isOverContactPhoto;
-  cursor.style.display = shouldShowCursor ? 'block' : 'none';
-  cursorRing.style.display = shouldShowCursor ? 'block' : 'none';
-}
-      
-      function animateRing() {
-        if (isOverHero) {
-          ringX += (mouseX - ringX) * 0.35;
-          ringY += (mouseY - ringY) * 0.35;
-          cursorRing.style.left = ringX + 'px';
-          cursorRing.style.top = ringY + 'px';
-        }
-        requestAnimationFrame(animateRing);
-      }
-      animateRing();
-    })();
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+    checkIfOverHero(e);
+  });
+  
+  function animateRing() {
+    if (isOverHeroGlobal || isOverContactPhotoGlobal) {
+      ringX += (mouseX - ringX) * 0.35;
+      ringY += (mouseY - ringY) * 0.35;
+      cursorRing.style.left = ringX + 'px';
+      cursorRing.style.top = ringY + 'px';
+    }
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+})();
 
     // Copie email
     const emailElement = document.getElementById('emailToCopy');
@@ -1139,7 +1148,7 @@ body:has(.lightbox.active) .cursor-ring,
         
         const feedback = document.createElement('div');
         feedback.className = 'email-feedback';
-        feedback.textContent = '✓ Copiée';
+        feedback.textContent = '✓ Copié';
         
         const rect = emailElement.getBoundingClientRect();
         feedback.style.left = (rect.right + window.scrollX + 20) + 'px';
