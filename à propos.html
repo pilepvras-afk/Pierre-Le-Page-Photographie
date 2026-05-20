@@ -4,11 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>À propos - Pierre Le Page</title>
-   <!-- Favicons -->
-  <link rel="icon" type="image/png" href="LOGO NOIR SUR BLANC.png" media="(prefers-color-scheme: light)" />
-  <link rel="icon" type="image/png" href="Favicon blanc.png" media="(prefers-color-scheme: dark)" />
-  <link rel="icon" type="image/png" href="Favicon blanc.png" />
-
   <style>
     * {
       margin: 0;
@@ -25,7 +20,7 @@
     }
     
     .container {
-      max-width: 800px;
+      max-width: 1000px;
       margin: 0 auto;
       padding: 60px 24px;
     }
@@ -92,12 +87,63 @@
     }
     
     .signature-note {
-      margin-top: 20px;
+      margin: 30px 0 35px;
       font-style: italic;
       border-left: 3px solid #c0a86a;
       padding-left: 20px;
       color: #5a5a5a;
       font-size: 0.95rem;
+    }
+    
+    /* Panorama section — aucune animation ni transformation au survol */
+    .panorama-section {
+      margin: 30px 0 20px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #faf9f5;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      /* Suppression de toute transition ou effet de scale/hover */
+    }
+    
+    /* Conteneur de l'image avec assombrissement léger */
+    .panorama-image {
+      position: relative;
+      display: block;
+      line-height: 0;
+    }
+    
+    .panorama-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      aspect-ratio: 16 / 6;
+      transition: none; /* Aucune animation au survol */
+      filter: brightness(0.88); /* Léger assombrissement global */
+    }
+    
+    /* Optionnel : léger dégradé de fondu en bas pour fondre avec la légende (renforce l'assombrissement doux) */
+    .panorama-image::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 30%;
+      background: linear-gradient(to top, rgba(0,0,0,0.12), transparent);
+      pointer-events: none;
+      border-radius: 0 0 12px 12px;
+    }
+    
+    .panorama-caption {
+      padding: 12px 20px;
+      background: #fefcf8;
+      font-size: 0.8rem;
+      color: #8a7a60;
+      text-align: center;
+      letter-spacing: 0.3px;
+      font-style: normal;
+      border-top: 1px solid #ede9df;
     }
     
     @media (max-width: 560px) {
@@ -118,6 +164,10 @@
       
       .container {
         padding: 40px 20px;
+      }
+      
+      .panorama-image img {
+        aspect-ratio: 16 / 5;
       }
     }
     
@@ -165,8 +215,24 @@
       « La photographie est une manière de retenir le souffle du monde. » <br />— Pierre Le Page
     </div>
     
+    <!-- Image type panorama : paysage naturel immersif, sans animation ni effet hover, avec assombrissement -->
+    <div class="panorama-section">
+      <div class="panorama-image">
+        <img src="https://picsum.photos/id/104/1600/600" 
+             alt="Vaste paysage naturel - Brume matinale et vallée silencieuse"
+             srcset="https://picsum.photos/id/104/800/300 800w,
+                     https://picsum.photos/id/104/1200/450 1200w,
+                     https://picsum.photos/id/104/1600/600 1600w"
+             sizes="(max-width: 1000px) 100vw, 1000px"
+             loading="lazy">
+      </div>
+      <div class="panorama-caption">
+        📷 Vallée de la Vézère · Brume d'automne — Pierre Le Page
+      </div>
+    </div>
+    
     <div class="small-credit">
-      Portrait &nbsp;•&nbsp; Vision naturaliste
+      Portrait naturaliste &nbsp;•&nbsp; Regard sur les grands espaces
     </div>
   </div>
 </body>
