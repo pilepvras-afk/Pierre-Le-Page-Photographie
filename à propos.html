@@ -100,11 +100,9 @@
       font-size: 0.95rem;
     }
     
-    /* Panorama section — deux fois plus large que la version originale */
+    /* Panorama section — sans bords ronds, image plus opaque */
     .panorama-section {
       margin: 30px 0 20px;
-      border-radius: 12px;
-      overflow: hidden;
       background: #faf9f5;
       box-shadow: 0 8px 20px rgba(0,0,0,0.08);
       width: 100%;
@@ -112,7 +110,7 @@
       margin-right: auto;
     }
     
-    /* Conteneur de l'image avec assombrissement léger */
+    /* Conteneur de l'image - sans bords ronds */
     .panorama-image {
       position: relative;
       display: block;
@@ -126,20 +124,12 @@
       object-fit: cover;
       aspect-ratio: 16 / 5;
       transition: none;
-      filter: brightness(0.88);
+      filter: brightness(1); /* Image plus opaque (suppression de l'assombrissement) */
     }
     
-    /* Léger dégradé de fondu en bas */
+    /* Suppression complète du dégradé */
     .panorama-image::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 30%;
-      background: linear-gradient(to top, rgba(0,0,0,0.12), transparent);
-      pointer-events: none;
-      border-radius: 0 0 12px 12px;
+      display: none;
     }
     
     /* Suppression complète de la légende */
@@ -169,12 +159,6 @@
       
       .panorama-image img {
         aspect-ratio: 16 / 4;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .panorama-section {
-        width: 100%;
       }
     }
     
@@ -216,10 +200,10 @@
     <p>-</p>
     
     <div class="signature-note">
-      « Le souvenir permis du glorieux éphémère  » <br />— Pierre Le Page
+      « Le souvenir permis de l'éphémère  » <br />— Pierre Le Page
     </div>
     
-    <!-- Panorama - Maintenant deux fois plus large (100% au lieu de 50%) -->
+    <!-- Panorama - Sans bords ronds, image plus opaque -->
     <div class="panorama-section">
       <div class="panorama-image">
         <img src="portait dos centré large.jpg" 
