@@ -100,21 +100,26 @@
       font-size: 0.95rem;
     }
     
-    /* Panorama section — image transparente (sans opacité ni brightness) */
+    /* Panorama section — fond noir anthracite élégant */
     .panorama-section {
-      margin: 30px 0 20px;
-      background: transparent; /* Fond transparent */
+      margin: 30px 0 0;
+      background: #1a1a1a; /* Noir anthracite */
       width: 100%;
       margin-left: auto;
       margin-right: auto;
-      margin-top: 200px;
+      position: relative;
+      /* Liseré or sur tous les contours */
+      border: 1px solid #c0a86a;
+      box-shadow: 0 0 0 1px rgba(192, 168, 106, 0.3), 0 10px 30px rgba(0,0,0,0.2);
     }
     
-    /* Conteneur de l'image - sans bords ronds */
+    /* Conteneur de l'image */
     .panorama-image {
       position: relative;
       display: block;
       line-height: 0;
+      padding: 20px; /* Espace intérieur élégant */
+      background: #1a1a1a;
     }
     
     .panorama-image img {
@@ -123,20 +128,54 @@
       display: block;
       object-fit: cover;
       aspect-ratio: 16 / 5;
-      /* Suppression de tous les effets visuels */
+      /* Image normale sans effets */
       filter: none;
-      opacity: 1; /* Image totalement visible */
+      opacity: 1;
       background: transparent;
     }
     
-    /* Suppression complète du dégradé */
+    /* Suppression du dégradé */
     .panorama-image::after {
       display: none;
     }
     
-    /* Suppression complète de la légende */
-    .panorama-caption {
-      display: none;
+    /* Credits dans le même esprit */
+    .credits-wrapper {
+      background: #1a1a1a; /* Noir anthracite */
+      border: 1px solid #c0a86a;
+      border-top: none; /* Évite la double bordure avec panorama */
+      box-shadow: 0 0 0 1px rgba(192, 168, 106, 0.3);
+      margin-top: -1px; /* Fusionne avec la bordure du panorama */
+    }
+    
+    .small-credit {
+      font-size: 0.75rem;
+      color: #c0a86a; /* Doré pour le texte */
+      text-align: center;
+      letter-spacing: 0.3px;
+      padding: 20px 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+      font-weight: 400;
+      background: #1a1a1a;
+    }
+    
+    .small-credit a {
+      color: #d4bc7a;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .small-credit a:hover {
+      color: #e8d49c;
+    }
+    
+    /* Séparateur décoratif */
+    .gold-separator {
+      width: 60px;
+      height: 1px;
+      background: #c0a86a;
+      margin: 0 auto 15px auto;
     }
     
     @media (max-width: 560px) {
@@ -162,6 +201,10 @@
       .panorama-image img {
         aspect-ratio: 16 / 4;
       }
+      
+      .panorama-image {
+        padding: 12px;
+      }
     }
     
     hr {
@@ -169,15 +212,6 @@
       border: 0;
       height: 1px;
       background: linear-gradient(90deg, #e0dbcf, #c0a86a, #e0dbcf);
-    }
-    
-    .small-credit {
-      font-size: 0.75rem;
-      color: #aaa;
-      margin-top: 28px;
-      text-align: center;
-      letter-spacing: 0.3px;
-      margin-top: 100px;
     }
   </style>
 </head>
@@ -205,7 +239,7 @@
     
     <p>-</p>
     
-    <!-- Panorama - Image transparente sans effets -->
+    <!-- Panorama - Fond noir anthracite avec liseré or -->
     <div class="panorama-section">
       <div class="panorama-image">
         <img src="portait dos centré large.jpg" 
@@ -214,8 +248,12 @@
       </div>
     </div>
     
-    <div class="small-credit">
-      Pierre Le Page ©2026 | Photographie naturaliste et romantique
+    <!-- Credits avec fond noir anthracite et liseré or -->
+    <div class="credits-wrapper">
+      <div class="gold-separator"></div>
+      <div class="small-credit">
+        Pierre Le Page ©2026 | Photographie naturaliste et romantique
+      </div>
     </div>
   </div>
 </body>
