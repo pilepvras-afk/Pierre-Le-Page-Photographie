@@ -100,15 +100,14 @@
       font-size: 0.95rem;
     }
     
-    /* Panorama section — sans bords ronds, image plus opaque */
+    /* Panorama section — image transparente (sans opacité ni brightness) */
     .panorama-section {
       margin: 30px 0 20px;
-      background: #faf9f5;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      background: transparent; /* Fond transparent */
       width: 100%;
       margin-left: auto;
       margin-right: auto;
-      margin-top : 200px;
+      margin-top: 200px;
     }
     
     /* Conteneur de l'image - sans bords ronds */
@@ -124,9 +123,10 @@
       display: block;
       object-fit: cover;
       aspect-ratio: 16 / 5;
-      transition: none;
-      filter: brightness(1);
-      opacity: 0.08;
+      /* Suppression de tous les effets visuels */
+      filter: none;
+      opacity: 1; /* Image totalement visible */
+      background: transparent;
     }
     
     /* Suppression complète du dégradé */
@@ -177,7 +177,7 @@
       margin-top: 28px;
       text-align: center;
       letter-spacing: 0.3px;
-      margin-top : 100px;
+      margin-top: 100px;
     }
   </style>
 </head>
@@ -188,7 +188,6 @@
     
     <div class="portrait-section">
       <div class="portrait-image">
-        <!-- Portrait - Correction : un seul attribut src -->
         <img src="portrait1 centré.jpg" 
              alt="Portrait de Pierre Le Page, photographe naturaliste">
       </div>
@@ -200,13 +199,13 @@
     
     <hr />
 
-       <div class="signature-note">
+    <div class="signature-note">
       « Le souvenir permis de l'éphémère  » <br />— Pierre Le Page
     </div>
     
     <p>-</p>
     
-    <!-- Panorama - Sans bords ronds, image plus opaque -->
+    <!-- Panorama - Image transparente sans effets -->
     <div class="panorama-section">
       <div class="panorama-image">
         <img src="portait dos centré large.jpg" 
@@ -216,7 +215,7 @@
     </div>
     
     <div class="small-credit">
-     Pierre Le Page ©2026 | Photographie naturaliste et romantique
+      Pierre Le Page ©2026 | Photographie naturaliste et romantique
     </div>
   </div>
 </body>
