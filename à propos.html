@@ -24,10 +24,32 @@
       min-height: 100vh;
     }
     
+    /* Section complète fond noir anthracite semi-transparent */
+    .full-width-dark {
+      width: 100vw;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      background: rgba(26, 26, 26, 0.92); /* Noir anthracite moins opaque */
+      border-top: 1px solid #c0a86a;
+      border-bottom: 1px solid #c0a86a;
+      margin-top: 40px;
+      margin-bottom: 0;
+    }
+    
     .container {
       max-width: 1000px;
       margin: 0 auto;
       padding: 60px 24px;
+    }
+    
+    /* Conteneur interne pour le contenu sur fond noir */
+    .dark-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 24px;
     }
     
     .back-link {
@@ -91,6 +113,11 @@
       margin-bottom: 20px;
     }
     
+    /* Texte sur fond noir */
+    .dark-content p {
+      color: #e0e0e0;
+    }
+    
     .signature-note {
       margin: 30px 0 35px;
       font-style: italic;
@@ -100,26 +127,23 @@
       font-size: 0.95rem;
     }
     
-    /* Panorama section — fond noir anthracite élégant */
-    .panorama-section {
-      margin: 30px 0 0;
-      background: #1a1a1a; /* Noir anthracite */
-      width: 100%;
-      margin-left: auto;
-      margin-right: auto;
-      position: relative;
-      /* Liseré or sur tous les contours */
-      border: 1px solid #c0a86a;
-      box-shadow: 0 0 0 1px rgba(192, 168, 106, 0.3), 0 10px 30px rgba(0,0,0,0.2);
+    /* Signature sur fond noir */
+    .dark-content .signature-note {
+      color: #d4d4d4;
+      border-left-color: #c0a86a;
     }
     
-    /* Conteneur de l'image */
+    /* Panorama section sur fond noir */
+    .panorama-section {
+      margin: 30px 0 0;
+      width: 100%;
+      position: relative;
+    }
+    
     .panorama-image {
       position: relative;
       display: block;
       line-height: 0;
-      padding: 20px; /* Espace intérieur élégant */
-      background: #1a1a1a;
     }
     
     .panorama-image img {
@@ -128,36 +152,36 @@
       display: block;
       object-fit: cover;
       aspect-ratio: 16 / 5;
-      /* Image normale sans effets */
       filter: none;
       opacity: 1;
       background: transparent;
+      border: 1px solid rgba(192, 168, 106, 0.4);
     }
     
-    /* Suppression du dégradé */
     .panorama-image::after {
       display: none;
     }
     
-    /* Credits dans le même esprit */
+    /* Credits dans le fond noir */
     .credits-wrapper {
-      background: #1a1a1a; /* Noir anthracite */
-      border: 1px solid #c0a86a;
-      border-top: none; /* Évite la double bordure avec panorama */
-      box-shadow: 0 0 0 1px rgba(192, 168, 106, 0.3);
-      margin-top: -1px; /* Fusionne avec la bordure du panorama */
+      margin-top: 30px;
+      padding-top: 20px;
+    }
+    
+    .gold-separator {
+      width: 60px;
+      height: 1px;
+      background: #c0a86a;
+      margin: 0 auto 15px auto;
     }
     
     .small-credit {
       font-size: 0.75rem;
-      color: #c0a86a; /* Doré pour le texte */
+      color: #c0a86a;
       text-align: center;
       letter-spacing: 0.3px;
-      padding: 20px 24px;
-      max-width: 1000px;
-      margin: 0 auto;
+      padding: 0 0 20px 0;
       font-weight: 400;
-      background: #1a1a1a;
     }
     
     .small-credit a {
@@ -170,12 +194,10 @@
       color: #e8d49c;
     }
     
-    /* Séparateur décoratif */
-    .gold-separator {
-      width: 60px;
-      height: 1px;
-      background: #c0a86a;
-      margin: 0 auto 15px auto;
+    /* Séparation entre section blanche et noire */
+    .transition-spacer {
+      height: 20px;
+      background: transparent;
     }
     
     @media (max-width: 560px) {
@@ -194,16 +216,12 @@
         text-align: left;
       }
       
-      .container {
+      .container, .dark-content {
         padding: 40px 20px;
       }
       
       .panorama-image img {
         aspect-ratio: 16 / 4;
-      }
-      
-      .panorama-image {
-        padding: 12px;
       }
     }
     
@@ -213,9 +231,15 @@
       height: 1px;
       background: linear-gradient(90deg, #e0dbcf, #c0a86a, #e0dbcf);
     }
+    
+    /* HR sur fond noir */
+    .dark-content hr {
+      background: linear-gradient(90deg, #3a3a3a, #c0a86a, #3a3a3a);
+    }
   </style>
 </head>
 <body>
+  <!-- Première partie - fond blanc -->
   <div class="container">
     <a href="index.html" class="back-link">← Retour à l'accueil</a>
     <h1>À propos</h1>
@@ -230,29 +254,34 @@
         <p>-</p>
       </div>
     </div>
-    
-    <hr />
-
-    <div class="signature-note">
-      « Le souvenir permis de l'éphémère  » <br />— Pierre Le Page
-    </div>
-    
-    <p>-</p>
-    
-    <!-- Panorama - Fond noir anthracite avec liseré or -->
-    <div class="panorama-section">
-      <div class="panorama-image">
-        <img src="portait dos centré large.jpg" 
-             alt="Vaste paysage naturel - Brume matinale et vallée silencieuse"
-             loading="lazy">
+  </div>
+  
+  <!-- Section complète fond noir anthracite semi-transparent qui s'étend sur toute la largeur et jusqu'en bas -->
+  <div class="full-width-dark">
+    <div class="dark-content">
+      <hr />
+      
+      <div class="signature-note">
+        « Le souvenir permis de l'éphémère  » <br />— Pierre Le Page
       </div>
-    </div>
-    
-    <!-- Credits avec fond noir anthracite et liseré or -->
-    <div class="credits-wrapper">
-      <div class="gold-separator"></div>
-      <div class="small-credit">
-        Pierre Le Page ©2026 | Photographie naturaliste et romantique
+      
+      <p>-</p>
+      
+      <!-- Panorama -->
+      <div class="panorama-section">
+        <div class="panorama-image">
+          <img src="portait dos centré large.jpg" 
+               alt="Vaste paysage naturel - Brume matinale et vallée silencieuse"
+               loading="lazy">
+        </div>
+      </div>
+      
+      <!-- Credits -->
+      <div class="credits-wrapper">
+        <div class="gold-separator"></div>
+        <div class="small-credit">
+          Pierre Le Page ©2026 | Photographie naturaliste et romantique
+        </div>
       </div>
     </div>
   </div>
